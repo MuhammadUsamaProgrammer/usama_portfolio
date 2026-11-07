@@ -1,0 +1,341 @@
+{
+  "personalInfo": {
+    "name": "Muhammad Usama",
+    "title": "Flutter Developer",
+    "bio": "Hey there! I'm Muhammad Usama, a passionate Flutter Developer with 3+ years of hands-on experience building amazing mobile applications!\n\nWhat I Do:\nI transform ideas into reality through beautiful, high-performance cross-platform apps. I've successfully delivered 30+ production-ready applications that are live on App Store and Play Store, serving thousands of users worldwide!\n\nMy Superpowers:\n• Expert in Flutter (iOS, Android & Web)\n• Master of clean architecture and design patterns\n• State management wizard (GetX, Provider, Riverpod, Bloc)\n• API integration specialist (REST, GraphQL, WebSockets)\n• Real-time features enthusiast (GPS tracking, live chat)\n• Payment gateway pro (Stripe, Apple Pay, Google Pay)\n\nWhat Makes Me Different:\nI don't just write code—I craft solutions! I excel at team leadership, project management, and ensuring on-time delivery without compromising quality. I've managed remote teams, coordinated sprints, and turned tight deadlines into successful launches.\n\nFun Fact:\nWhile pursuing my BS in IT at Bahria University, I've shipped 30+ apps including big brands like Coca-Cola (Coke D2H). Talk about multitasking!\n\nLet's build something amazing together!",
+    "avatarPath": "assets/images/personal/my_img.jpg"
+  },
+  "projects": [
+    {
+      "title": "All Out Adventures",
+      "description": "Complete booking management system for UAE's top entertainment and adventure activities. Seamless booking experience with real-time availability and instant confirmations. Featured app with 30,000+ downloads!",
+      "technologies": [
+        "Flutter",
+        "Google Maps API",
+        "GetX",
+        "MVVM",
+        "FCM",
+        "SQLite",
+        "REST APIs",
+        "Firebase Auth",
+        "Payment Gateway"
+      ],
+      "appStoreLink": "https://apps.apple.com/gb/app/all-out-trips-adventures-uae/id1670310616",
+      "playStoreLink": "https://play.google.com/store/apps/details?id=com.AllOut.app"
+    },
+    {
+      "title": "GotStuck",
+      "description": "Revolutionary vehicle recovery service app with dual platforms! Complete solution for roadside assistance featuring real-time GPS tracking, number plate scanner, and integrated payments. 4 apps in total (Customer & Provider for both platforms). Featured app with 2000+ downloads!",
+      "technologies": [
+        "Flutter",
+        "Real-time GPS Tracking",
+        "GetX",
+        "FCM",
+        "Stripe Payment",
+        "Number Plate Scanner ML",
+        "SQLite",
+        "Firebase Auth"
+      ],
+      "appStoreLink": "https://apps.apple.com/app/gotstuck/id6503938954",
+      "playStoreLink": "https://play.google.com/store/apps/details?id=com.gotstuck.customerlite"
+    },
+    {
+      "title": "Coke D2H",
+      "description": "Premium beverage ordering app for Coca-Cola brand. Buy your favourite Coca-Cola products with seamless ordering experience.",
+      "technologies": [
+        "Flutter",
+        "Google Maps",
+        "GetX",
+        "MVVM",
+        "FCM Push Notifications",
+        "SQLite",
+        "REST APIs",
+        "Firebase Auth"
+      ],
+      "appStoreLink": "https://apps.apple.com/pk/app/coke-d2h/id6444126594",
+      "playStoreLink": "https://play.google.com/store/apps/details?id=com.coke.d2h"
+    },
+    {
+      "title": "Denowatts",
+      "description": "Advanced technician app for Deno Setup & Configuration. Features cutting-edge multi-threading, real-time hardware tracking, and GraphQL integration. Complex app with high performance requirements!",
+      "technologies": [
+        "Flutter",
+        "Riverpod",
+        "MVVM",
+        "Multi-threading (Isolates)",
+        "Hive DB",
+        "GraphQL API",
+        "Real-time Hardware Tracking",
+        "Background Services"
+      ],
+      "appStoreLink": "https://apps.apple.com/sa/app/denowatts/id1640705337",
+      "playStoreLink": "https://play.google.com/store/apps/details?id=com.denowatts.app&pcampaignid=web_share&pli=1"
+    },
+    {
+      "title": "MerchMint Web App",
+      "description": "Fully responsive Flutter eCommerce web application! Complete online store with Stripe payments, Firebase backend, admin panel, and beautiful responsive design for desktop, tablet & mobile. Live and running!",
+      "technologies": [
+        "Flutter Web",
+        "Stripe JS",
+        "Provider",
+        "MVVM",
+        "Firebase Auth",
+        "Firebase Storage",
+        "Admin Dashboard",
+        "Responsive Design"
+      ],
+      "webLink": "https://merchmint-c5248.web.app/"
+    },
+    {
+      "title": "Wird Book",
+      "description": "A spiritual app providing daily Islamic litanies (wird) based on Prophetic traditions to guide users in structured remembrance and connection with Allah.",
+      "technologies": [
+        "Riverpod (code generation) for scalable state management",
+        "REST APIs (Dio + Retrofit) with auth interceptors",
+        "Freezed data models with generated serialization",
+        "offline-first architecture with JSON & media caching",
+        "Bulk download manager (progress, cancel, persistence)",
+        "Background services + foreground notifications",
+        "Prayer time engine (geo-based, madhab & method customization)",
+        "Prayer alarms (timezone, pre-alerts, audio fallback)",
+        "Qibla compass with real-time sensor integration",
+        "Audio system (AudioService + JustAudio)",
+        "Quran/Mushaf reader (ayah mapping, bookmarks, tafseer, resume state)",
+        "SQLite DB + SharedPreferences for persistence"
+      ],
+      "appStoreLink": "https://apps.apple.com/us/app/wird-book-litanies/id1448590729",
+      "playStoreLink": "https://play.google.com/store/apps/details?id=wirdbook.eito&pcampaignid=web_share"
+    }
+  ],
+  "skills": {
+    "programmingLanguages": [
+      "Dart",
+      "JavaScript",
+      "Java",
+      "Kotlin",
+      "Swift"
+    ],
+    "frontend": [
+      "Flutter (iOS & Android)",
+      "Flutter Web",
+      "Responsive Design",
+      "Material Design",
+      "Cupertino Design",
+      "Custom UI/UX"
+    ],
+    "backend": [
+      "REST APIs",
+      "GraphQL APIs",
+      "WebSockets",
+      "Interceptors",
+      "Firebase Realtime DB",
+      "Firebase Firestore",
+      "Firebase Authentication"
+    ],
+    "cloudDevOps": [
+      "Firebase",
+      "CI/CD",
+      "GitHub",
+      "BitBucket",
+      "Version Control",
+      "Google Cloud"
+    ],
+    "mlTools": [
+      "Firebase ML Kit",
+      "Number Plate Scanner",
+      "Image Recognition"
+    ],
+    "other": [
+      "MVC & MVVM Architecture",
+      "Flutter Gen, Freezed and Code Gen",
+      "Background Services",
+      "Offline Caching and Download Manager Patterns",
+      "PDF Handling",
+      "GetX State Management",
+      "Provider",
+      "Riverpod",
+      "Bloc",
+      "Multi-threading (Isolates)",
+      "Google Maps Integration",
+      "GPS Real-time Tracking",
+      "Platform-Specific Integration (Method Channels)",
+      "In-App Purchases (Apple/Google Pay)",
+      "Stripe Payment Gateway",
+      "Firebase Notifications (FCM)",
+      "Local Database (Hive, SQLite)",
+      "Real-Time Chat",
+      "Swagger",
+      "Postman",
+      "Team Leadership",
+      "Project Management"
+    ]
+  },
+  "experiences": [
+    {
+      "title": "Flutter Developer (Remote)",
+      "company": "Orizon Sol",
+      "duration": "Dec 2025 – Continue",
+      "responsibilities": [
+        "Building and maintaining production Flutter applications for remote clients",
+        "Applying clean architecture patterns for scalable and maintainable code",
+        "Integrating APIs and third-party services to support core product workflows",
+        "Coordinating with distributed teams to deliver features on schedule"
+      ],
+      "impact": "Currently contributing to active product development with a focus on reliability, performance, and delivery speed."
+    },
+    {
+      "title": "Flutter Developer (Remote)",
+      "company": "Blue Bit Bite",
+      "duration": "Nov 2024 – Sep 2025",
+      "responsibilities": [
+        "Led development of 10+ production mobile applications",
+        "Implemented complex features: real-time GPS tracking, payment gateways, live chat",
+        "Architected scalable solutions using MVVM and Clean Architecture",
+        "Collaborated with international teams across multiple time zones",
+        "Conducted code reviews and maintained 95%+ code quality standards",
+        "Managed project timelines with 100% on-time delivery record"
+      ],
+      "impact": "Delivered 10+ apps with 4.5+ star ratings. Reduced app crash rate to <0.5%. Improved development velocity by 40% through code optimization and reusable components."
+    },
+    {
+      "title": "Flutter Developer",
+      "company": "BuiltInSoft",
+      "duration": "Oct 2022 – Aug 2024",
+      "responsibilities": [
+        "Progressed from intern to onsite and then remote Flutter roles",
+        "Spearheaded development of enterprise apps (Coke D2H, GotStuck)",
+        "Led cross-functional teams of 3-5 developers",
+        "Implemented CI/CD pipelines reducing deployment time by 60%",
+        "Integrated 20+ third-party services and complex APIs",
+        "Delivered production-ready applications across iOS and Android",
+        "Crafted pixel-perfect UIs matching designer specifications"
+      ],
+      "impact": "Shipped 15+ major applications including brand partnerships. Managed teams that delivered projects 30% faster than industry average. Zero critical bugs in production for 6 months straight!"
+    },
+    {
+      "title": "Flutter Developer (Intern)",
+      "company": "Virtual Soft",
+      "duration": "Jul 2022 – Sep 2022",
+      "responsibilities": [
+        "Mastered Flutter development fundamentals and best practices",
+        "Built responsive UI components with Material and Cupertino design",
+        "Integrated REST APIs and implemented state management",
+        "Debugged and resolved issues in production applications",
+        "Participated in agile ceremonies and code review sessions",
+        "Contributed innovative ideas that improved app performance"
+      ],
+      "impact": "Completed internship with distinction and built feature modules that progressed to production use."
+    }
+  ],
+  "contactInfo": {
+    "email": "usama.flutterdev@gmail.com",
+    "phone": "+92 318-0063687",
+    "github": "https://github.com/MuhammadUsamaProgrammer",
+    "linkedin": "https://www.linkedin.com/in/muhammad-usama-82207b282/",
+    "twitter": "https://wa.me/923180063687"
+  },
+  "education": {
+    "degree": "Bachelor of Science (BS)",
+    "major": "Information Technology",
+    "school": "Bahria University Lahore",
+    "duration": "Currently Pursuing | Expected 2026",
+    "coursework": [
+      "Mobile Application Development",
+      "Software Engineering & Project Management",
+      "Database Management Systems (SQL, NoSQL)",
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "Web Technologies & Development",
+      "Computer Networks & Security",
+      "Artificial Intelligence & Machine Learning"
+    ],
+    "achievements": [
+      "Delivered 30+ production apps while maintaining academic excellence",
+      "Gained 3+ years of professional Flutter experience during studies",
+      "Successfully managed multiple remote teams and complex projects",
+      "Active contributor to Flutter community and open-source projects",
+      "Published apps serving 100,000+ users across App Store & Play Store",
+      "Maintained consistent high performance in both academics and professional work",
+      "Applied theoretical knowledge to real-world enterprise applications",
+      "Built personal brand as a skilled Flutter developer in the industry",
+      "Mobile Team Co-Lead at GDGoC Bahria University",
+      "Successfully conducted Flutter development bootcamps for students",
+      "Active volleyball player representing university sports teams",
+      "Socially active with strong community involvement and civic sense"
+    ]
+  },
+  "certifications": [
+    {
+      "name": "Flutter Development - Professional Experience",
+      "platform": "BuiltInSoft & Blue Bit Bite",
+      "link": null,
+      "date": "2022-2025"
+    },
+    {
+      "name": "Mobile App Development (iOS & Android)",
+      "platform": "Industry Experience",
+      "link": null,
+      "date": "2022-Present"
+    },
+    {
+      "name": "State Management (GetX, Provider, Riverpod, Bloc)",
+      "platform": "Professional Projects",
+      "link": null,
+      "date": "2022-Present"
+    },
+    {
+      "name": "Payment Gateway Integration (Stripe, In-App Purchases)",
+      "platform": "Production Apps",
+      "link": null,
+      "date": "2023-Present"
+    },
+    {
+      "name": "Real-time Tracking & Maps Integration",
+      "platform": "GotStuck & ManiPadi Projects",
+      "link": null,
+      "date": "2023-2024"
+    },
+    {
+      "name": "GraphQL & REST API Integration",
+      "platform": "Multiple Production Apps",
+      "link": null,
+      "date": "2022-Present"
+    }
+  ],
+  "leadership": {
+    "conferences": [
+      "Flutter Community Contributor",
+      "Mobile Team Co-Lead at GDGoC (Google Developer Groups on Campus) Bahria University",
+      "Conducted Flutter development bootcamps for students",
+      "Mentored junior developers in Flutter development",
+      "Conducted internal tech talks on Flutter best practices",
+      "Shared knowledge on state management and architecture patterns"
+    ],
+    "communities": [
+      "Active member of GDGoC Bahria University - Mobile Team Co-Lead",
+      "Socially active in community service and volunteer work",
+      "Strong civic sense - actively participate in social welfare initiatives",
+      "Active Flutter developer community member",
+      "GitHub contributor - MuhammadUsamaProgrammer",
+      "LinkedIn Flutter community participant",
+      "Knowledge sharing through professional network"
+    ],
+    "mentorship": [
+      "Conducted Flutter bootcamp - trained 50+ students in mobile app development",
+      "Mobile Team Co-Lead at GDGoC - guiding students in their tech journey",
+      "Mentored team members at BuiltInSoft and Blue Bit Bite",
+      "Guided interns in Flutter development journey",
+      "Provided code reviews and technical guidance to peers",
+      "Helped junior developers with debugging and problem-solving"
+    ],
+    "organizing": [
+      "Co-Lead GDGoC Bahria University Mobile Team - organizing workshops and events",
+      "Organized and conducted Flutter bootcamp sessions",
+      "Led development teams on multiple projects",
+      "Managed remote team coordination across time zones",
+      "Organized sprint planning and retrospectives",
+      "Coordinated with stakeholders for project deliveries",
+      "Active in university sports - Volleyball team player"
+    ]
+  }
+}
