@@ -84,15 +84,35 @@ export interface PortfolioData {
 
 export type ProjectPlatform = "mobile" | "web";
 
-/** Extra, resume-verified details layered on top of a JSON project. */
+/**
+ * How a project's screenshots are presented:
+ * - "screens": raw UI captures, shown inside a device frame (phone or browser)
+ * - "artwork": store graphics or photos that already include devices, shown as-is
+ */
+export type MediaStyle = "screens" | "artwork";
+
+export interface ProjectTone {
+  from: string;
+  to: string;
+  ink: string;
+}
+
+/**
+ * Optional editorial details layered on top of a JSON project.
+ * Every field has a sensible default, so a new project only needs its
+ * JSON entry (plus an image folder) to appear on the site.
+ */
 export interface ProjectExtra {
-  /** Short, presentation-ready summary. Must preserve the JSON facts. */
-  summary: string;
+  /** Short, presentation-ready summary. Defaults to the JSON description. */
+  summary?: string;
   /** Role as stated on the resume. */
-  role: string;
+  role?: string;
   /** Platforms as stated on the resume. */
-  stack: string;
-  platform: ProjectPlatform;
+  stack?: string;
+  /** Defaults to "web" when the project only has a web link, else "mobile". */
+  platform?: ProjectPlatform;
+  /** Defaults to "screens". */
+  mediaStyle?: MediaStyle;
   /** Optional verified headline metric from the JSON description. */
   metric?: { value: string; label: string };
   /**
@@ -100,9 +120,29 @@ export interface ProjectExtra {
    * technology list (used when the JSON entries are long sentences).
    */
   chips?: string[];
-  /** Soft tint used for the abstract cover artwork. */
-  tone: { from: string; to: string; ink: string };
+  /** Soft backdrop tint behind the project imagery. */
+  tone?: ProjectTone;
   featured?: boolean;
+}
+
+/** Shape written by scripts/generate-project-media.mjs. */
+export interface MediaManifestEntry {
+  slug: string;
+  icon: { src: string; width: number; height: number } | null;
+  screens: { src: string; caption: string; width: number; height: number }[];
+}
+
+export interface ProjectImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption?: string;
+}
+
+export interface ProjectMedia {
+  icon: ProjectImage | null;
+  screens: ProjectImage[];
 }
 
 export interface ProjectLink {
@@ -111,8 +151,19 @@ export interface ProjectLink {
   kind: "appStore" | "playStore" | "web";
 }
 
-export interface ShowcaseProject extends Project, ProjectExtra {
+export interface ShowcaseProject extends Project {
   index: number;
+  slug: string;
+  summary: string;
+  role?: string;
+  stack?: string;
+  platform: ProjectPlatform;
+  mediaStyle: MediaStyle;
+  metric?: { value: string; label: string };
+  tone: ProjectTone;
+  featured: boolean;
+  /** Real imagery from public/images/projects/<slug>/, if any. */
+  media: ProjectMedia | null;
   links: ProjectLink[];
   /** Chips to render (either `chips` or the JSON technologies). */
   tags: string[];

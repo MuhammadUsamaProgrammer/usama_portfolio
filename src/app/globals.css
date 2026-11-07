@@ -194,6 +194,81 @@
 }
 
 /* ------------------------------------------------------------------ */
+/* Cursor spotlight (see SpotlightGroup.tsx). Fine pointers only.      */
+/* ------------------------------------------------------------------ */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight::before,
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out-soft);
+  }
+
+  /* Soft light inside the card. */
+  .spotlight::before {
+    z-index: -1;
+    background: radial-gradient(
+      380px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--color-accent) 7%, transparent),
+      transparent 60%
+    );
+  }
+
+  /* Light catching the 1px border, also on neighbouring cards. */
+  .spotlight::after {
+    padding: 1px;
+    background: radial-gradient(
+      240px circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--color-accent) 55%, transparent),
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  [data-spotlight-group]:hover .spotlight::after {
+    opacity: 1;
+  }
+
+  [data-spotlight-group] .spotlight:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Scroll-highlighted words (see ScrollHighlight.tsx): --p goes 0 → 1. */
+.scroll-word {
+  color: color-mix(in oklab, var(--color-ink) calc(var(--p, 0) * 100%), var(--color-muted));
+}
+
+/* Project gallery dialog */
+@keyframes gallery-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@keyframes gallery-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Reduced motion                                                      */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {

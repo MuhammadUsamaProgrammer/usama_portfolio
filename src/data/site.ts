@@ -75,8 +75,10 @@ export const about = {
 };
 
 /**
- * Resume-verified details per project, keyed by the exact JSON title.
- * Summaries keep the JSON facts while using a calmer editorial tone.
+ * Optional, resume-verified details per project, keyed by the exact JSON
+ * title. Summaries keep the JSON facts in a calmer editorial tone. A project
+ * without an entry still renders (the summary falls back to the JSON
+ * description). Images live in public/images/projects/<slug>/.
  */
 export const projectExtras: Record<string, ProjectExtra> = {
   "All Out Adventures": {
@@ -86,7 +88,8 @@ export const projectExtras: Record<string, ProjectExtra> = {
     stack: "iOS & Android",
     platform: "mobile",
     metric: { value: "30,000+", label: "downloads" },
-    tone: { from: "#F4EDE2", to: "#E8DAC4", ink: "#7A5C33" },
+    tone: { from: "#E8F1FC", to: "#CFE1F6", ink: "#1F5FA8" },
+    mediaStyle: "artwork",
     featured: true,
   },
   GotStuck: {
@@ -96,7 +99,8 @@ export const projectExtras: Record<string, ProjectExtra> = {
     stack: "iOS & Android",
     platform: "mobile",
     metric: { value: "2,000+", label: "downloads" },
-    tone: { from: "#E9EEF6", to: "#D3DDEC", ink: "#34558A" },
+    tone: { from: "#FBF4DF", to: "#F2E1AE", ink: "#6E5512" },
+    mediaStyle: "artwork",
     featured: true,
   },
   "Coke D2H": {
@@ -105,7 +109,7 @@ export const projectExtras: Record<string, ProjectExtra> = {
     role: "Mobile Developer (Solo)",
     stack: "iOS & Android",
     platform: "mobile",
-    tone: { from: "#F7E8E6", to: "#ECD2CE", ink: "#8E3A31" },
+    tone: { from: "#F9E9E7", to: "#EFCFCB", ink: "#8E2A22" },
   },
   Denowatts: {
     summary:
@@ -113,7 +117,7 @@ export const projectExtras: Record<string, ProjectExtra> = {
     role: "Mobile Developer (Solo)",
     stack: "iOS & Android",
     platform: "mobile",
-    tone: { from: "#ECF0E6", to: "#D9E3CF", ink: "#4A6638" },
+    tone: { from: "#E8EDF7", to: "#CFD9EE", ink: "#24427A" },
   },
   "MerchMint Web App": {
     summary:
@@ -121,7 +125,7 @@ export const projectExtras: Record<string, ProjectExtra> = {
     role: "Full Stack Flutter Web Developer (Solo)",
     stack: "Web — desktop, tablet & mobile",
     platform: "web",
-    tone: { from: "#E5F2EE", to: "#CDE5DD", ink: "#2C6F5C" },
+    tone: { from: "#F0EEEB", to: "#DDD8D1", ink: "#3A3530" },
   },
   "Wird Book": {
     summary:
@@ -137,7 +141,7 @@ export const projectExtras: Record<string, ProjectExtra> = {
       "JustAudio",
       "SQLite",
     ],
-    tone: { from: "#F1EFE6", to: "#E2DDCB", ink: "#625B38" },
+    tone: { from: "#E9F0E7", to: "#D1E0CD", ink: "#2F5530" },
   },
 };
 

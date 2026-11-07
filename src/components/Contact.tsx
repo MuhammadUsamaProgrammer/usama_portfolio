@@ -1,6 +1,7 @@
 import { ArrowUpRight, Mail } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
+import { Magnetic } from "@/components/interactions/Magnetic";
 import { contact } from "@/data/site";
 import { contactLinks, email } from "@/lib/portfolio";
 
@@ -30,6 +31,7 @@ export function Contact() {
 
           {email ? (
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Magnetic>
               <a
                 href={`mailto:${email}`}
                 className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-[0.9375rem] font-medium text-panel transition-[transform,background-color] duration-250 hover:-translate-y-0.5 hover:bg-white/90 active:scale-[0.98] sm:h-13 sm:px-7"
@@ -37,7 +39,10 @@ export function Contact() {
                 <Mail aria-hidden className="size-4" />
                 Start a conversation
               </a>
-              <CopyEmailButton email={email} />
+              </Magnetic>
+              <Magnetic>
+                <CopyEmailButton email={email} />
+              </Magnetic>
             </div>
           ) : null}
 

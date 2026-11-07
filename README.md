@@ -19,6 +19,7 @@ npm run dev        # http://localhost:3000
 | `npm run build`  | Create an optimized production build      |
 | `npm run start`  | Serve the production build                |
 | `npm run lint`   | Run ESLint                                |
+| `npm run media`  | Re-scan project images (also runs automatically before `dev` and `build`) |
 | `npx tsc --noEmit` | Type-check the project                  |
 
 ## Editing content
@@ -31,10 +32,37 @@ Content is kept separate from presentation:
 | `src/data/site.ts` | Editorial layer: hero and about copy, project summaries, roles from the resume, skill grouping, leadership, SEO, and which contact channels are public |
 | `public/images/profile.webp` | Portrait used in the About section |
 
-- **Add a project:** add it to `portfolio.json`, then add a matching entry (same `title`) to `projectExtras` in `site.ts`. The build fails if one is missing.
 - **Skills:** every skill in the JSON is shown. Skills not mapped in `skillGroups` fall into a "More" group automatically.
 - **Contact privacy:** only the keys listed in `publicContactKeys` (`email`, `linkedin`, `github`) are published. The phone number and WhatsApp link are intentionally excluded.
-- **Project imagery:** covers are abstract CSS artwork (`src/components/ProjectCover.tsx`). Swap in real screenshots there when available.
+
+## Adding a project
+
+1. **Add it to `src/data/portfolio.json`** (title, description, technologies, store or web links).
+2. **Add its images** to `public/images/projects/<project-slug>/`. The slug is the title in lower case with words joined by `-`:
+   `"All Out Adventures"` → `all-out-adventures/`, `"MerchMint Web App"` → `merchmint-web-app/`.
+3. *(Optional)* add an entry with the same `title` to `projectExtras` in `src/data/site.ts` for a shorter summary, role, platforms, headline metric, backdrop tint, `featured: true`, or `mediaStyle`.
+
+Then run `npm run dev`; the project appears with its cover, icon and gallery. Without step 3 it still renders (the summary falls back to the JSON description); without step 2 it shows abstract artwork.
+
+### Project images
+
+```text
+public/images/projects/gotstuck/
+├── icon.webp                              app icon / logo (square, optional)
+├── 01-customer--instant-login.webp        → "Customer · Instant login"
+├── 02-customer--recovery-or-car-report.webp
+└── 06-provider--dashboard-and-stats.webp  → "Provider · Dashboard and stats"
+```
+
+- **Order:** the leading number. Gaps are fine (`01`, `02`, `05`…), so you can insert screens later without renaming everything.
+- **Caption and alt text:** the words after the number, lower-case and joined by `-`. A double dash `--` adds a group label, e.g. `customer--login` → "Customer · Login".
+- **Cover:** the first screenshot is the hero image of the card; featured cards also fan out the 2nd and 3rd.
+- **Formats:** `.webp` (preferred), `.png` or `.jpg`.
+- **Presentation** (`mediaStyle` in `site.ts`):
+  - `"screens"` (default): raw UI captures, placed in a phone frame (or a browser frame when `platform` is `"web"`). Best at a 9:19.5 phone ratio.
+  - `"artwork"`: store graphics or photos that already include a device, shown as they are.
+
+`npm run media` writes `src/data/project-media.json` (commit it). It warns about misnamed files or folders that match no project, and fails on duplicate numbers.
 
 ## Project structure
 
@@ -45,9 +73,10 @@ src/
 │   ├── animations/      # Reveal + MotionProvider (reduced-motion aware)
 │   ├── three/           # HeroVisual (lazy loader), HeroScene (R3F), HeroFallback (CSS)
 │   └── ui/              # ButtonLink, SectionHeading
-├── data/                # portfolio.json + site.ts
+├── data/                # portfolio.json, site.ts, project-media.json (generated)
 ├── lib/portfolio.ts     # typed, derived data for components
 └── types/portfolio.ts
+scripts/generate-project-media.mjs   # scans public/images/projects/
 ```
 
 ## Light and dark theme
@@ -55,7 +84,26 @@ src/
 - The theme follows the visitor's OS setting until they use the sun/moon toggle in the navbar; their choice is then saved in `localStorage`.
 - An inline script in `<head>` (`src/lib/theme-script.ts`) applies the theme before first paint, so there is no flash.
 - Colors are tokens in `src/app/globals.css`: light values in `@theme`, dark overrides under `[data-theme="dark"]`. Use `dark:` utilities for the rare one-off.
-- The 3D glass and the CSS fallback have their own dark tuning; project mockups stay light and are slightly dimmed.
+- The 3D glass and the CSS fallback have their own dark tuning; project backdrops switch to a dark tint of each project's color, while screenshots stay untouched.
+
+## Interactions
+
+Reusable pieces live in `src/components/interactions/`:
+
+| Component | Where | What it does |
+| --- | --- | --- |
+| `ScrollDrift` | Hero | Text and sculpture drift, scale and fade as the hero scrolls away |
+| `ScrollHighlight` | About lead | Words blend from muted to ink while scrolling (always AA contrast) |
+| `TimelineProgress` | Experience | Accent fill grows down the timeline rail |
+| `CountUp` | Hero stats | Numbers count up once when they come into view |
+| `ScrollProgressButton` | Global | Floating back-to-top with a scroll-progress ring |
+| `Magnetic` | Hero and contact CTAs | Buttons lean toward the cursor (max 8px) |
+| `SpotlightGroup` + `.spotlight` | Skills | Cursor light inside cards and along neighbouring borders |
+| `TiltFrame` | About portrait | Subtle 3D tilt with a soft glare |
+
+Project cards also tilt, show a "View" label that follows the cursor over the cover, and their imagery drifts slightly on scroll; the navbar has a hover pill that slides between links.
+
+All pointer effects are limited to mouse/trackpad (`useFinePointer`), and every effect turns off under `prefers-reduced-motion` (`useMotionAllowed`, hydration-safe). Nothing hijacks scrolling.
 
 ## 3D hero
 

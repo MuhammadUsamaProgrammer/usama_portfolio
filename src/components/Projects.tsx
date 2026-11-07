@@ -20,7 +20,7 @@ export function Projects() {
 
         <div className="mt-16 space-y-6 lg:mt-20 lg:space-y-8">
           {featured.map((project, i) => (
-            <Reveal key={project.title}>
+            <Reveal key={project.slug}>
               <ProjectCard project={project} variant="featured" reverse={i % 2 === 1} />
             </Reveal>
           ))}
@@ -28,7 +28,7 @@ export function Projects() {
 
         <ul className="mt-6 grid gap-6 md:grid-cols-2 lg:mt-8 lg:gap-8">
           {rest.map((project, i) => (
-            <Reveal as="li" key={project.title} delay={(i % 2) * 0.08}>
+            <Reveal as="li" key={project.slug} delay={(i % 2) * 0.08}>
               <ProjectCard project={project} variant="grid" />
             </Reveal>
           ))}

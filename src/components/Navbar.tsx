@@ -23,6 +23,8 @@ export function Navbar() {
   const [active, setActive] = useState<SectionId>("home");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  /** Desktop link under the cursor; a soft pill slides between links. */
+  const [hovered, setHovered] = useState<SectionId | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -121,11 +123,18 @@ export function Navbar() {
             </span>
           </a>
 
-          <ul className="hidden items-center gap-0.5 md:flex">
+          <ul
+            className="hidden items-center gap-0.5 md:flex"
+            onPointerLeave={() => setHovered(null)}
+          >
             {desktopItems.map((item) => {
               const isActive = active === item.id;
               return (
-                <li key={item.id} className="relative">
+                <li
+                  key={item.id}
+                  className="relative"
+                  onPointerEnter={(event) => event.pointerType === "mouse" && setHovered(item.id)}
+                >
                   <a
                     href={`#${item.id}`}
                     aria-current={isActive ? "location" : undefined}
@@ -135,6 +144,19 @@ export function Navbar() {
                   >
                     {item.label}
                   </a>
+                  <AnimatePresence>
+                    {hovered === item.id ? (
+                      <motion.span
+                        layoutId="nav-hover"
+                        aria-hidden
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                        className="absolute inset-0 rounded-full bg-ink/[0.045]"
+                      />
+                    ) : null}
+                  </AnimatePresence>
                   {isActive ? (
                     <motion.span
                       layoutId="nav-active"

@@ -1,5 +1,8 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
+import { CountUp } from "@/components/interactions/CountUp";
+import { Magnetic } from "@/components/interactions/Magnetic";
+import { ScrollDrift } from "@/components/interactions/ScrollDrift";
 import { HeroVisual } from "@/components/three/HeroVisual";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { hero } from "@/data/site";
@@ -15,7 +18,8 @@ export function Hero() {
       <div aria-hidden className="hero-glow absolute inset-0 -z-10" />
 
       <div className="container-page grid items-center gap-8 lg:grid-cols-12 lg:gap-6">
-        <div className="lg:col-span-7">
+        {/* Text eases down and fades as the hero scrolls away. */}
+        <ScrollDrift className="lg:col-span-7" y={70} fadeTo={0.15}>
           <Reveal y={16}>
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3.5 py-1.5 text-[0.8125rem] font-medium text-ink shadow-soft backdrop-blur">
               <span aria-hidden className="size-1.5 rounded-full bg-accent" />
@@ -48,6 +52,7 @@ export function Hero() {
 
           <Reveal delay={0.24} y={18}>
             <div className="mt-9 flex flex-col gap-3 min-[420px]:flex-row">
+              <Magnetic>
               <ButtonLink href="#projects" size="lg">
                 Explore My Work
                 <ArrowDown
@@ -55,6 +60,8 @@ export function Hero() {
                   className="size-4 transition-transform duration-250 group-hover/btn:translate-y-0.5"
                 />
               </ButtonLink>
+              </Magnetic>
+              <Magnetic>
               <ButtonLink href="#contact" size="lg" variant="secondary">
                 Get in Touch
                 <ArrowUpRight
@@ -62,13 +69,20 @@ export function Hero() {
                   className="size-4 text-muted transition-transform duration-250 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
                 />
               </ButtonLink>
+              </Magnetic>
             </div>
           </Reveal>
-        </div>
+        </ScrollDrift>
 
-        <div className="relative h-[300px] min-[420px]:h-[360px] sm:h-[440px] lg:col-span-5 lg:h-[580px]">
+        {/* The sculpture rises and recedes slightly faster: a gentle parallax. */}
+        <ScrollDrift
+          className="relative h-[300px] min-[420px]:h-[360px] sm:h-[440px] lg:col-span-5 lg:h-[580px]"
+          y={-50}
+          scale={0.94}
+          fadeTo={0.35}
+        >
           <HeroVisual />
-        </div>
+        </ScrollDrift>
 
         <Reveal delay={0.3} className="lg:col-span-12">
           <dl className="mt-2 grid grid-cols-3 gap-4 border-t border-line pt-7 sm:gap-8 lg:mt-6 lg:max-w-3xl">
@@ -76,7 +90,7 @@ export function Hero() {
               <div key={stat.label} className="flex flex-col-reverse gap-1.5">
                 <dt className="text-[0.8125rem] leading-snug text-muted">{stat.label}</dt>
                 <dd className="text-[clamp(1.75rem,1.3rem+1.8vw,2.75rem)] font-semibold leading-none tracking-[-0.035em] text-ink tabular-nums">
-                  {stat.value}
+                  <CountUp value={stat.value} />
                 </dd>
               </div>
             ))}

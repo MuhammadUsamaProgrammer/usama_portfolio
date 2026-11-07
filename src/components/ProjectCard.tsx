@@ -1,14 +1,12 @@
 "use client";
 
-import { ArrowUpRight, ChevronDown } from "lucide-react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "motion/react";
-import { useEffect, useState, type PointerEvent } from "react";
+import Image from "next/image";
+import { ArrowUpRight, ChevronDown, Images } from "lucide-react";
+import { motion, useMotionValue, useSpring } from "motion/react";
+import { useState, type PointerEvent } from "react";
+import { useFinePointer } from "@/components/interactions/hooks";
 import { ProjectCover } from "@/components/ProjectCover";
+import { ProjectGallery } from "@/components/ProjectGallery";
 import type { ShowcaseProject } from "@/types/portfolio";
 
 type ProjectCardProps = {
@@ -19,25 +17,13 @@ type ProjectCardProps = {
 };
 
 const SPRING = { stiffness: 220, damping: 24, mass: 0.6 };
-
-/** Pointer tilt only for fine pointers with motion allowed. */
-function useCanTilt() {
-  const reduce = useReducedMotion();
-  const [fine, setFine] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const update = () => setFine(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-  return fine && !reduce;
-}
+const CURSOR_SPRING = { stiffness: 520, damping: 42, mass: 0.35 };
 
 export function ProjectCard({ project, variant, reverse = false }: ProjectCardProps) {
   const featured = variant === "featured";
   const maxTilt = featured ? 1.5 : 3;
-  const canTilt = useCanTilt();
+  // Tilt and the cursor label only run for mouse/trackpad with motion allowed.
+  const canTilt = useFinePointer();
 
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
@@ -58,10 +44,37 @@ export function ProjectCard({ project, variant, reverse = false }: ProjectCardPr
     ry.set(0);
   }
 
+  /* "View" label that follows the cursor over the cover. */
+  const labelX = useSpring(useMotionValue(0), CURSOR_SPRING);
+  const labelY = useSpring(useMotionValue(0), CURSOR_SPRING);
+  const [coverHover, setCoverHover] = useState(false);
+
+  function placeLabel(event: PointerEvent<HTMLElement>, jump: boolean) {
+    if (!canTilt) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    if (jump) {
+      labelX.jump(x);
+      labelY.jump(y);
+    } else {
+      labelX.set(x);
+      labelY.set(y);
+    }
+  }
+
   const tagLimit = featured ? 9 : 6;
   const visibleTags = project.tags.slice(0, tagLimit);
   const hiddenCount = project.tags.length - visibleTags.length;
-  const titleId = `project-${project.index}-title`;
+  const titleId = `project-${project.slug}-title`;
+  const screens = project.media?.screens ?? [];
+  const icon = project.media?.icon ?? null;
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const meta = [project.stack, project.role].filter(Boolean);
+
+  const coverLayout = featured
+    ? `aspect-[4/3] lg:aspect-auto lg:min-h-[34rem] ${reverse ? "lg:order-2" : ""}`
+    : "aspect-[16/11]";
 
   return (
     <motion.article
@@ -73,26 +86,74 @@ export function ProjectCard({ project, variant, reverse = false }: ProjectCardPr
         featured ? "lg:grid lg:grid-cols-2" : ""
       }`}
     >
-      <ProjectCover
-        project={project}
-        className={
-          featured
-            ? `aspect-[4/3] lg:aspect-auto lg:min-h-[34rem] ${reverse ? "lg:order-2" : ""}`
-            : "aspect-[16/11]"
-        }
-      />
+      {screens.length > 0 ? (
+        <button
+          type="button"
+          onClick={() => setGalleryOpen(true)}
+          aria-label={`View ${screens.length} screenshots of ${project.title}`}
+          onPointerEnter={(event) => {
+            placeLabel(event, true);
+            setCoverHover(true);
+          }}
+          onPointerMove={(event) => placeLabel(event, false)}
+          onPointerLeave={() => setCoverHover(false)}
+          className={`relative block w-full overflow-hidden ${canTilt ? "cursor-none" : "cursor-zoom-in"} text-left focus-visible:outline-offset-[-6px] focus-visible:rounded-[1.75rem] ${coverLayout}`}
+        >
+          <ProjectCover project={project} rich={featured} className="absolute inset-0" />
+          <span className="absolute bottom-4 left-4 inline-flex h-8 items-center gap-1.5 rounded-full bg-white/85 px-3 text-xs font-medium text-[#171717] shadow-soft ring-1 ring-black/5 backdrop-blur transition-colors duration-200 group-hover:bg-white">
+            <Images aria-hidden className="size-3.5" />
+            {screens.length} screens
+          </span>
+          {canTilt ? (
+            <motion.span
+              aria-hidden
+              style={{ x: labelX, y: labelY }}
+              className="pointer-events-none absolute left-0 top-0 z-10"
+            >
+              <span className="block -translate-x-1/2 -translate-y-1/2">
+                <motion.span
+                  initial={false}
+                  animate={coverHover ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex h-11 items-center gap-1.5 rounded-full bg-ink pr-3.5 pl-4 text-sm font-medium text-on-ink shadow-lift"
+                >
+                  View
+                  <ArrowUpRight className="size-4" />
+                </motion.span>
+              </span>
+            </motion.span>
+          ) : null}
+        </button>
+      ) : (
+        <ProjectCover project={project} rich={featured} className={`relative ${coverLayout}`} />
+      )}
 
       <div
         className={`flex flex-1 flex-col ${
           featured ? "p-7 sm:p-10 lg:p-12 xl:p-14" : "p-7 sm:p-8"
         }`}
       >
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted">
-          <span className="font-mono tabular-nums">{String(project.index).padStart(2, "0")}</span>
-          <span aria-hidden className="h-px w-5 bg-line" />
-          <span>{project.stack}</span>
-          <span aria-hidden>·</span>
-          <span>{project.role}</span>
+        <div className="flex items-center gap-4">
+          {icon ? (
+            <Image
+              src={icon.src}
+              alt={icon.alt}
+              width={featured ? 56 : 48}
+              height={featured ? 56 : 48}
+              className={`shrink-0 rounded-[22%] shadow-soft ring-1 ring-line ${
+                featured ? "size-14" : "size-12"
+              }`}
+            />
+          ) : null}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted">
+            <span className="font-mono tabular-nums">{String(project.index).padStart(2, "0")}</span>
+            {meta.map((item) => (
+              <span key={item} className="flex items-center gap-3">
+                <span aria-hidden className="h-px w-5 bg-line" />
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
 
         <h3
@@ -157,7 +218,7 @@ export function ProjectCard({ project, variant, reverse = false }: ProjectCardPr
           </details>
         ) : null}
 
-        {project.links.length > 0 ? (
+        {project.links.length > 0 || screens.length > 0 ? (
           <div className="mt-auto flex flex-wrap gap-2 pt-8">
             {project.links.map((link, i) => (
               <a
@@ -179,9 +240,27 @@ export function ProjectCard({ project, variant, reverse = false }: ProjectCardPr
                 />
               </a>
             ))}
+            {screens.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => setGalleryOpen(true)}
+                className="inline-flex h-11 items-center gap-1.5 rounded-full px-4 text-sm font-medium text-ink transition-[background-color,transform] duration-250 hover:bg-subtle active:scale-[0.98]"
+              >
+                <Images aria-hidden className="size-4 opacity-70" />
+                View screens
+              </button>
+            ) : null}
           </div>
         ) : null}
       </div>
+      {galleryOpen ? (
+        <ProjectGallery
+          title={project.title}
+          icon={icon}
+          screens={screens}
+          onClose={() => setGalleryOpen(false)}
+        />
+      ) : null}
     </motion.article>
   );
 }

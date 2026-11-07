@@ -1,4 +1,5 @@
 import raw from "@/data/portfolio.json";
+import mediaManifest from "@/data/project-media.json";
 import {
   experienceStages,
   projectExtras,
@@ -7,7 +8,11 @@ import {
 } from "@/data/site";
 import type {
   ContactLink,
+  MediaManifestEntry,
   PortfolioData,
+  Project,
+  ProjectMedia,
+  ProjectTone,
   ProjectLink,
   ShowcaseProject,
   SkillGroup,
@@ -30,14 +35,33 @@ export function calm(text: string): string {
 
 const SHORT_TAG_MAX = 32;
 
-export const showcaseProjects: ShowcaseProject[] = projects.map((project, i) => {
-  const extra = projectExtras[project.title];
-  if (!extra) {
-    throw new Error(
-      `Missing editorial entry for project "${project.title}" in src/data/site.ts`,
-    );
-  }
+/** Neutral backdrop for projects without a custom tone. */
+const DEFAULT_TONE: ProjectTone = { from: "#F1F1EE", to: "#E2E2DD", ink: "#3F3F46" };
 
+const media = mediaManifest as Record<string, MediaManifestEntry>;
+
+/** Same rule the media script uses to name project image folders. */
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function projectMedia(project: Project): ProjectMedia | null {
+  const entry = media[project.title];
+  if (!entry || (entry.screens.length === 0 && !entry.icon)) return null;
+  return {
+    icon: entry.icon ? { ...entry.icon, alt: `${project.title} app icon` } : null,
+    screens: entry.screens.map((screen) => ({
+      ...screen,
+      alt: `${project.title} — ${screen.caption}`,
+    })),
+  };
+}
+
+function projectLinks(project: Project): ProjectLink[] {
   const links: ProjectLink[] = [];
   if (project.appStoreLink)
     links.push({ label: "App Store", href: project.appStoreLink, kind: "appStore" });
@@ -45,14 +69,28 @@ export const showcaseProjects: ShowcaseProject[] = projects.map((project, i) => 
     links.push({ label: "Google Play", href: project.playStoreLink, kind: "playStore" });
   if (project.webLink)
     links.push({ label: "Visit live site", href: project.webLink, kind: "web" });
+  return links;
+}
 
+export const showcaseProjects: ShowcaseProject[] = projects.map((project, i) => {
+  const extra = projectExtras[project.title] ?? {};
+  const webOnly = Boolean(project.webLink) && !project.appStoreLink && !project.playStoreLink;
   const longForm = project.technologies.some((t) => t.length > SHORT_TAG_MAX);
 
   return {
     ...project,
-    ...extra,
     index: i + 1,
-    links,
+    slug: slugify(project.title),
+    summary: extra.summary ?? calm(project.description),
+    role: extra.role,
+    stack: extra.stack,
+    platform: extra.platform ?? (webOnly ? "web" : "mobile"),
+    mediaStyle: extra.mediaStyle ?? "screens",
+    metric: extra.metric,
+    tone: extra.tone ?? DEFAULT_TONE,
+    featured: extra.featured ?? false,
+    media: projectMedia(project),
+    links: projectLinks(project),
     tags: extra.chips ?? project.technologies,
     highlights: longForm ? project.technologies : [],
   };

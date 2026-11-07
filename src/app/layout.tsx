@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/animations/MotionProvider";
+import { ScrollProgressButton } from "@/components/interactions/ScrollProgressButton";
 import { Navbar } from "@/components/Navbar";
 import { site } from "@/data/site";
 import { contactLinks, personalInfo } from "@/lib/portfolio";
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MotionProvider>
           <Navbar />
           {children}
+          <ScrollProgressButton />
         </MotionProvider>
         <script
           type="application/ld+json"

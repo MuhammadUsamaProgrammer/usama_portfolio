@@ -1,0 +1,278 @@
+{
+  "All Out Adventures": {
+    "slug": "all-out-adventures",
+    "icon": {
+      "src": "/images/projects/all-out-adventures/icon.jpg",
+      "height": 480,
+      "width": 480
+    },
+    "screens": [
+      {
+        "src": "/images/projects/all-out-adventures/01-adventure-awaits.webp",
+        "caption": "Adventure awaits",
+        "width": 810,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/all-out-adventures/02-discover-top-activities.webp",
+        "caption": "Discover top activities",
+        "width": 810,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/all-out-adventures/03-locate-activities-nearby.webp",
+        "caption": "Locate activities nearby",
+        "width": 810,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/all-out-adventures/04-adrenaline-meter.webp",
+        "caption": "Adrenaline meter",
+        "width": 810,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/all-out-adventures/05-instant-booking.webp",
+        "caption": "Instant booking",
+        "width": 810,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/all-out-adventures/06-activity-browsing-in-hand.webp",
+        "caption": "Activity browsing in hand",
+        "width": 700,
+        "height": 864
+      },
+      {
+        "src": "/images/projects/all-out-adventures/07-adrenaline-meter-in-hand.webp",
+        "caption": "Adrenaline meter in hand",
+        "width": 475,
+        "height": 824
+      },
+      {
+        "src": "/images/projects/all-out-adventures/08-splash-screen.webp",
+        "caption": "Splash screen",
+        "width": 810,
+        "height": 1440
+      }
+    ]
+  },
+  "Coke D2H": {
+    "slug": "coke-d2h",
+    "icon": {
+      "src": "/images/projects/coke-d2h/icon.webp",
+      "width": 491,
+      "height": 418
+    },
+    "screens": [
+      {
+        "src": "/images/projects/coke-d2h/01-sign-in.webp",
+        "caption": "Sign in",
+        "width": 368,
+        "height": 796
+      },
+      {
+        "src": "/images/projects/coke-d2h/02-home.webp",
+        "caption": "Home",
+        "width": 591,
+        "height": 1280
+      },
+      {
+        "src": "/images/projects/coke-d2h/03-categories.webp",
+        "caption": "Categories",
+        "width": 864,
+        "height": 1872
+      },
+      {
+        "src": "/images/projects/coke-d2h/04-coca-cola-products.webp",
+        "caption": "Coca cola products",
+        "width": 591,
+        "height": 1280
+      },
+      {
+        "src": "/images/projects/coke-d2h/05-your-orders.webp",
+        "caption": "Your orders",
+        "width": 864,
+        "height": 1872
+      },
+      {
+        "src": "/images/projects/coke-d2h/06-order-history.webp",
+        "caption": "Order history",
+        "width": 864,
+        "height": 1872
+      }
+    ]
+  },
+  "Denowatts": {
+    "slug": "denowatts",
+    "icon": {
+      "src": "/images/projects/denowatts/icon.webp",
+      "width": 462,
+      "height": 450
+    },
+    "screens": [
+      {
+        "src": "/images/projects/denowatts/01-login.webp",
+        "caption": "Login",
+        "width": 480,
+        "height": 1043
+      },
+      {
+        "src": "/images/projects/denowatts/02-sign-up.webp",
+        "caption": "Sign up",
+        "width": 480,
+        "height": 1043
+      },
+      {
+        "src": "/images/projects/denowatts/03-field-setup.webp",
+        "caption": "Field setup",
+        "width": 480,
+        "height": 1043
+      },
+      {
+        "src": "/images/projects/denowatts/04-gateway-setup.webp",
+        "caption": "Gateway setup",
+        "width": 480,
+        "height": 1043
+      }
+    ]
+  },
+  "GotStuck": {
+    "slug": "gotstuck",
+    "icon": {
+      "src": "/images/projects/gotstuck/icon.webp",
+      "width": 483,
+      "height": 441
+    },
+    "screens": [
+      {
+        "src": "/images/projects/gotstuck/01-customer--instant-login.webp",
+        "caption": "Customer · Instant login",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/02-customer--recovery-or-car-report.webp",
+        "caption": "Customer · Recovery or car report",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/03-customer--select-vehicle-type.webp",
+        "caption": "Customer · Select vehicle type",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/04-customer--track-your-provider.webp",
+        "caption": "Customer · Track your provider",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/05-customer--car-report.webp",
+        "caption": "Customer · Car report",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/06-provider--dashboard-and-stats.webp",
+        "caption": "Provider · Dashboard and stats",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/07-provider--track-your-jobs.webp",
+        "caption": "Provider · Track your jobs",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/08-provider--job-details.webp",
+        "caption": "Provider · Job details",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/09-provider--track-your-customer.webp",
+        "caption": "Provider · Track your customer",
+        "width": 720,
+        "height": 1440
+      },
+      {
+        "src": "/images/projects/gotstuck/10-provider--my-vehicles.webp",
+        "caption": "Provider · My vehicles",
+        "width": 720,
+        "height": 1440
+      }
+    ]
+  },
+  "MerchMint Web App": {
+    "slug": "merchmint-web-app",
+    "icon": {
+      "src": "/images/projects/merchmint-web-app/icon.webp",
+      "width": 1280,
+      "height": 1280
+    },
+    "screens": [
+      {
+        "src": "/images/projects/merchmint-web-app/01-storefront-home.webp",
+        "caption": "Storefront home",
+        "width": 1124,
+        "height": 869
+      },
+      {
+        "src": "/images/projects/merchmint-web-app/02-product-details.webp",
+        "caption": "Product details",
+        "width": 1363,
+        "height": 890
+      },
+      {
+        "src": "/images/projects/merchmint-web-app/03-customer-reviews.webp",
+        "caption": "Customer reviews",
+        "width": 1111,
+        "height": 869
+      },
+      {
+        "src": "/images/projects/merchmint-web-app/04-newsletter-and-footer.webp",
+        "caption": "Newsletter and footer",
+        "width": 1111,
+        "height": 869
+      }
+    ]
+  },
+  "Wird Book": {
+    "slug": "wird-book",
+    "icon": {
+      "src": "/images/projects/wird-book/icon.webp",
+      "width": 400,
+      "height": 400
+    },
+    "screens": [
+      {
+        "src": "/images/projects/wird-book/01-home.webp",
+        "caption": "Home",
+        "width": 300,
+        "height": 650
+      },
+      {
+        "src": "/images/projects/wird-book/02-prayers-wird.webp",
+        "caption": "Prayers wird",
+        "width": 300,
+        "height": 650
+      },
+      {
+        "src": "/images/projects/wird-book/03-shaykh-books.webp",
+        "caption": "Shaykh books",
+        "width": 300,
+        "height": 650
+      },
+      {
+        "src": "/images/projects/wird-book/04-the-quran.webp",
+        "caption": "The quran",
+        "width": 300,
+        "height": 650
+      }
+    ]
+  }
+}

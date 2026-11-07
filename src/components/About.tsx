@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Reveal } from "@/components/animations/Reveal";
+import { ScrollHighlight } from "@/components/interactions/ScrollHighlight";
+import { TiltFrame } from "@/components/interactions/TiltFrame";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { about } from "@/data/site";
 import { education, personalInfo } from "@/lib/portfolio";
@@ -12,7 +14,7 @@ export function About() {
         {/* Portrait */}
         <Reveal className="lg:col-span-5">
           <figure className="mx-auto max-w-md lg:sticky lg:top-28 lg:max-w-none">
-            <div className="rounded-[1.75rem] border border-line bg-surface p-2 shadow-soft">
+            <TiltFrame className="rounded-[1.75rem] border border-line bg-surface p-2 shadow-soft">
               <Image
                 src={profile}
                 alt={`Portrait of ${personalInfo.name}, a ${personalInfo.title}, wearing a white shirt and dark tie with arms crossed against a light grey backdrop.`}
@@ -20,7 +22,7 @@ export function About() {
                 sizes="(min-width: 1280px) 480px, (min-width: 1024px) 38vw, (min-width: 448px) 448px, 100vw"
                 className="h-auto w-full rounded-[1.25rem]"
               />
-            </div>
+            </TiltFrame>
             <figcaption className="mt-4 flex items-center justify-between px-2 text-[0.8125rem] text-muted">
               <span className="font-medium text-ink">{personalInfo.name}</span>
               <span>{personalInfo.title}</span>
@@ -32,8 +34,14 @@ export function About() {
         <div className="lg:col-span-7 lg:pt-4">
           <SectionHeading id="about" index="01" eyebrow="About" title={about.heading} />
 
-          <div className="mt-10 space-y-6 text-[1.0625rem] leading-[1.75] text-ink/80 sm:text-lg">
-            {about.paragraphs.map((paragraph, i) => (
+          {/* Lead paragraph lights up word by word as it scrolls into view. */}
+          <ScrollHighlight
+            text={about.paragraphs[0]}
+            className="mt-10 text-[clamp(1.25rem,1.05rem+0.75vw,1.625rem)] font-medium leading-[1.5] tracking-[-0.015em]"
+          />
+
+          <div className="mt-8 space-y-6 text-[1.0625rem] leading-[1.75] text-ink/80 sm:text-lg">
+            {about.paragraphs.slice(1).map((paragraph, i) => (
               <Reveal key={i} delay={i * 0.06}>
                 <p>{paragraph}</p>
               </Reveal>

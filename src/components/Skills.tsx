@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
+import { SpotlightGroup } from "@/components/interactions/SpotlightGroup";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { skillGroups } from "@/lib/portfolio";
 import type { SkillIcon } from "@/types/portfolio";
@@ -43,7 +44,7 @@ export function Skills() {
           description="From the first widget to store release — the languages, frameworks and practices I use every day."
         />
 
-        <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-5">
+        <SpotlightGroup className="mt-16 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-5">
           {skillGroups.map((group, i) => {
             const Icon = ICONS[group.icon];
             return (
@@ -51,7 +52,7 @@ export function Skills() {
                 as="li"
                 key={group.id}
                 delay={(i % 3) * 0.06}
-                className="group flex flex-col rounded-[1.5rem] border border-line bg-bg p-6 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out-soft hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface hover:shadow-lift sm:p-7"
+                className="spotlight group flex flex-col rounded-[1.5rem] border border-line bg-bg p-6 transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out-soft hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface hover:shadow-lift sm:p-7"
               >
                 <div className="flex items-center justify-between">
                   <span className="grid size-10 place-items-center rounded-xl border border-line bg-surface text-ink transition-colors duration-300 group-hover:text-accent">
@@ -83,7 +84,7 @@ export function Skills() {
               </Reveal>
             );
           })}
-        </ul>
+        </SpotlightGroup>
       </div>
     </section>
   );

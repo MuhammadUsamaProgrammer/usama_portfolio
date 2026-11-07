@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/animations/Reveal";
+import { TimelineProgress } from "@/components/interactions/TimelineProgress";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { timeline } from "@/lib/portfolio";
 
@@ -23,10 +24,7 @@ export function Experience() {
         </div>
 
         <ol className="relative lg:col-span-8">
-          <span
-            aria-hidden
-            className="absolute left-[0.3125rem] top-3 bottom-3 w-px bg-line sm:left-[0.4375rem]"
-          />
+          <TimelineProgress className="left-[0.3125rem] top-3 bottom-3 sm:left-[0.4375rem]" />
           {timeline.map((entry) => (
             <Reveal
               as="li"
