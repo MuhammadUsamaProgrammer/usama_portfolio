@@ -1,435 +1,552 @@
-# CLAUDE.md — Premium Minimal 3D Portfolio
+# CLAUDE.md — Muhammad Usama Portfolio
 
-## 1. Project Mission
+## 1. Project Overview
 
-You are a senior frontend engineer, creative developer, UI/UX designer, and interaction designer.
+Build a complete, production-ready personal portfolio website based on the existing project files.
 
-Build a complete, production-ready personal portfolio website using my provided JSON data and resume.
+The website must deliver a premium, Apple-inspired minimalist experience with elegant typography, generous whitespace, carefully selected UI components, subtle cinematic animations, and one memorable interactive 3D element.
 
-The website must have an **Apple-inspired minimalist aesthetic** with premium typography, generous whitespace, subtle 3D elements, cinematic scrolling, and smooth interactions.
+The result must be original, professional, responsive, accessible, fast, and visually polished.
 
-The design must be original. Do not copy Apple's website, branding, imagery, or proprietary assets.
+Do not copy Apple's branding, proprietary assets, or website layouts.
 
-**Primary goal:** Create a portfolio that feels like a polished, premium digital product rather than a generic developer portfolio template.
+### Primary Goal
 
-## 2. Source Data
+Create a portfolio that looks and feels like a high-end digital product rather than a generic developer portfolio template.
 
-Before writing code:
+The design should communicate professionalism, technical capability, creativity, and attention to detail.
 
-1. Inspect the existing project structure.
-2. Find and read my portfolio JSON file.
-3. Find and read my resume, if available.
-4. Extract my real name, title, bio, skills, projects, experience, education, achievements, and verified links.
-5. Use the JSON as the primary structured data source.
-6. Use the resume to validate and supplement the JSON.
-7. Identify missing or conflicting information.
+---
+
+## 2. Source Files
+
+Read these files before implementation:
+
+- `reference/Muhammad Usama - Resume.pdf`
+- `src/data/portfolio.json`
+- `public/images/profile.webp`
+
+Inspect the repository before assuming any file or directory exists.
 
 ### Content Rules
 
-- Never invent projects, experience, metrics, or achievements.
-- Never create fake GitHub or demo links.
-- Do not display personal addresses, phone numbers, dates of birth, or other sensitive information without explicit approval.
-- Use only approved public contact information.
-- Keep content data-driven and easy to update.
-- If a project lacks an image, create a tasteful generic visual placeholder instead of pretending it is a real screenshot.
-- If a section has no verified content, omit it.
+1. Use `portfolio.json` as the primary structured content source.
+2. Use the resume to validate and supplement the portfolio data.
+3. Extract only verified skills, projects, experience, education, achievements, and links.
+4. Never invent projects, technologies, experience, metrics, certifications, or accomplishments.
+5. Do not generate fake GitHub links or project demos.
+6. Do not publish private information such as phone numbers, residential addresses, dates of birth, or personal identifiers.
+7. Use only approved public contact information and social links.
+8. If data is missing, omit the unsupported section or ask for clarification when essential.
+9. Keep portfolio content separate from presentation components.
+10. Do not rewrite factual information in ways that change its meaning.
 
-## 3. Technology Stack
+### Profile Image
 
-Use the following stack unless the existing project has a compatible alternative:
+Use `public/images/profile.webp` as the official professional portrait.
+
+- Primary placement: About section
+- Preserve the person's natural appearance
+- Maintain the original image proportions
+- Avoid stretching or excessive cropping
+- Use Next.js image optimization
+- Apply tasteful rounded corners and subtle framing
+- Provide descriptive alt text
+
+---
+
+## 3. Available Skills and MCP Tools
+
+### UI UX Pro Max Skill
+
+Skill location:
+
+`.claude/skills/ui-ux-pro-max/SKILL.md`
+
+Read and use this skill when working on:
+
+- Design systems
+- Typography
+- Color palettes
+- Layout composition
+- Responsive UI
+- Accessibility
+- Visual consistency
+- UI/UX quality
+- Interaction design
+
+Use the skill's relevant references and resources where appropriate.
+
+The portfolio's design requirements in this file remain the source of truth when general skill suggestions conflict with them.
+
+### 21st.dev MCP Server
+
+The 21st MCP server has been configured at Claude Code user scope.
+
+When available, use its tools to:
+
+- Discover suitable React components
+- Find elegant navigation patterns
+- Research hero section treatments
+- Explore premium project card layouts
+- Find refined interaction patterns
+- Retrieve useful component implementation details
+
+### 21st MCP Rules
+
+1. Check whether the MCP tools are available in the current session.
+2. Prefer components compatible with Next.js, React, TypeScript, and Tailwind CSS.
+3. Use the MCP selectively, not for every element.
+4. Adapt selected components to the project's own design system.
+5. Inspect component code, dependencies, and usage terms before integration.
+6. Avoid unnecessary packages, heavy effects, and unrelated visual styles.
+7. Do not execute unreviewed remote installation scripts.
+8. Do not expose API keys or modify MCP authentication settings.
+9. If the MCP is unavailable, continue development using the existing stack.
+10. Never claim an MCP tool was used unless the call actually succeeded.
+
+### Tool Philosophy
+
+- `CLAUDE.md` defines project requirements.
+- UI UX Pro Max guides design quality.
+- 21st MCP assists with component discovery.
+- Claude Code implements, integrates, and verifies the website.
+
+---
+
+## 4. Technology Stack
+
+Preferred stack:
 
 - Next.js with App Router
 - React
 - TypeScript
 - Tailwind CSS
-- Motion for React (`motion`)
+- Motion for React
 - Three.js
-- React Three Fiber (`@react-three/fiber`)
-- Drei (`@react-three/drei`)
-- Lucide React icons
+- React Three Fiber
+- Drei
+- Lucide React
 
-Use React Three Fiber only for the hero or another clearly justified visual element.
+Use Three.js and React Three Fiber only when the visual benefit justifies the performance cost.
 
-Avoid unnecessary dependencies, paid services, heavy animation libraries, and complex configurations.
+Prefer simple CSS and React implementations for ordinary UI elements.
 
-## 4. Design System
+Inspect the existing project and adapt it rather than unnecessarily rebuilding working infrastructure.
 
-### Visual Style
+---
 
-The design should feel:
+## 5. Design Direction
 
-- Minimal
+### Design Identity
+
+The website should feel:
+
 - Premium
-- Modern
+- Minimal
 - Elegant
+- Modern
 - Calm
-- Spacious
-- Interactive
+- Confident
+- Creative
 - Technically sophisticated
 
-Use a light theme by default.
+Think refined editorial design, precise spacing, exceptional typography, and subtle visual depth.
 
-### Color Palette
+### Color System
 
-```css
-:root {
-  --background: #fafaf8;
-  --surface: #ffffff;
-  --foreground: #171717;
-  --muted: #71717a;
-  --accent: #3478f6;
-  --border: #e8e8e8;
-}
-```
+Use a light theme as the primary design.
 
-Avoid neon colors, excessive gradients, and heavy glassmorphism.
+| Token | Value |
+|---|---|
+| Background | `#FAFAF8` |
+| Surface | `#FFFFFF` |
+| Primary text | `#171717` |
+| Secondary text | `#71717A` |
+| Accent blue | `#3478F6` |
+| Borders | `#E8E8E8` |
+
+Use accent blue sparingly for meaningful interactive elements.
+
+Avoid excessive gradients, neon colors, glowing borders, and overdecorated backgrounds.
 
 ### Typography
 
-Use Geist, Inter, or a clean system sans-serif font.
-
-Guidelines:
-
-- Large, bold hero typography
-- Tight but readable letter spacing for headings
-- Comfortable line height for paragraphs
-- Strong hierarchy
-- Minimal font-weight variations
-- Clear contrast between primary and secondary text
-
-### Layout
-
-- Maximum content width: approximately 1200px
-- Generous section spacing
-- Clean 12-column-inspired desktop layout
-- Responsive grids
-- Rounded project cards, approximately 20–28px radius
-- Subtle borders and shadows
-- Balanced asymmetrical compositions where useful
-
-Prioritize whitespace and alignment over decoration.
-
-## 5. Website Structure
-
-### A. Navigation
-
-Build a sticky or floating navigation bar with:
-
-- My name or monogram
-- About
-- Projects
-- Skills
-- Experience, if applicable
-- Contact
-
-Design:
-
-- Semi-transparent white surface
-- Subtle backdrop blur
-- Rounded shape
-- Smooth anchor scrolling
-- Responsive mobile menu
-- Accessible keyboard navigation
-
-### B. Hero Section
-
-Create a memorable hero section containing:
-
-- My real name
-- My verified professional title
-- A short introduction based on my data
-- Primary CTA: "Explore My Work"
-- Secondary CTA: "Get in Touch"
-- Subtle scroll indicator
-
-Use a strong editorial layout.
-
-#### 3D Hero Visual
-
-Create one elegant abstract 3D object.
-
-Preferred concept: a translucent glass or softly reflective geometric sculpture floating in a minimal environment.
+Use Geist, Inter, or a similarly refined sans-serif typeface.
 
 Requirements:
 
-- Gentle idle rotation
-- Subtle mouse-follow interaction
-- Soft lighting
-- Refined material appearance
-- Minimal geometry
-- No excessive particles
-- No distracting animation
-- No large external 3D models unless necessary
+- Large editorial hero headline
+- Clear visual hierarchy
+- Carefully controlled letter spacing
+- Comfortable paragraph line height
+- Strong contrast
+- Minimal font-weight variation
+- Responsive typography using CSS `clamp()` where useful
 
-The 3D object must complement the typography, not overpower it.
+### Layout
 
-On mobile or low-power devices, use a simpler rendering or static fallback.
+- Maximum content width around 1200–1280px
+- Generous section spacing
+- Balanced grid layouts
+- Responsive containers
+- Consistent spacing scale
+- Rounded cards around 20–28px
+- Subtle shadows
+- Thin borders
+- High-quality alignment
 
-### C. About Section
+Use whitespace as a major design element.
 
-Use my actual resume information.
+---
+
+## 6. Website Sections
+
+### Navigation
+
+Create a floating or sticky minimalist navbar.
+
+Include relevant links:
+
+- Home
+- About
+- Skills
+- Projects
+- Experience
+- Contact
+
+Requirements:
+
+- Semi-transparent surface
+- Subtle backdrop blur
+- Smooth section navigation
+- Active and focus states
+- Accessible mobile menu
+- Responsive behavior
+
+### Hero Section
+
+Create a striking full-screen or near-full-screen hero.
 
 Include:
 
-- Concise introduction
-- Background
-- Interests or specialization, if verified
-- Relevant professional highlights
+- Verified name
+- Verified professional title
+- Concise personal introduction
+- Primary CTA: Explore My Work
+- Secondary CTA: Get in Touch
+- One elegant abstract 3D visual
 
-Avoid generic filler text.
+The hero should be visually memorable without becoming cluttered.
 
-### D. Skills Section
+#### Interactive 3D Hero
 
-Group skills by actual categories such as:
+Preferred direction:
 
+A softly reflective or translucent abstract geometric sculpture, inspired by premium product photography.
+
+Requirements:
+
+- Smooth, slow idle rotation
+- Gentle pointer-based interaction
+- Soft realistic lighting
+- Restrained materials
+- Minimal geometry
+- Lightweight rendering
+- Responsive sizing
+- Lazy loading
+- Static or CSS fallback
+- Reduced-motion support
+
+Do not use excessive particles, intense glow, complicated scenes, or distracting motion.
+
+The 3D object should support the typography rather than compete with it.
+
+### About Section
+
+Create a premium editorial two-column layout.
+
+Use:
+
+- Actual biography derived from verified files
+- Professional profile image
+- Concise career or academic background
+- Relevant interests or specializations
+
+Keep the layout calm, readable, and professional.
+
+### Skills Section
+
+Organize verified skills into meaningful categories.
+
+Possible categories:
+
+- Programming Languages
 - Frontend
 - Backend
-- Languages
+- Databases
 - Tools
-- Cloud or DevOps
-- Other relevant specialties
+- Cloud and DevOps
+- AI or Other Specializations
 
-Only display categories supported by my data.
+Only include categories supported by the user's actual data.
 
-Use minimal cards, typography, and subtle hover feedback.
+Use elegant skill cards, typography, and restrained hover effects.
 
-Do not use arbitrary skill percentage bars.
+Do not use arbitrary percentage-based skill bars.
 
-### E. Featured Projects
+### Projects Section
 
-This should be one of the strongest visual sections.
+This should be one of the website's strongest sections.
 
-For each project, display:
+Each verified project may include:
 
-- Project name
-- Verified description
-- Technology stack
-- Image or placeholder
-- GitHub link, if available
-- Live demo link, if available
+- Project title
+- Description
+- Technologies
+- Project image or tasteful placeholder
+- GitHub link, if verified
+- Live demo, if verified
 
-Design requirements:
+Design:
 
-- Large editorial project cards
-- Alternating or well-balanced layouts
-- Beautiful image framing
-- Subtle elevation on hover
+- Large editorial cards
+- Strong image presentation
+- Responsive grids
+- Subtle hover elevation
 - Gentle image zoom
-- Optional small 3D tilt
-- Clear links and calls to action
+- Optional very small pointer tilt
+- Clear calls to action
 
-Prioritize project quality and readability.
+Avoid generic repeated card layouts if a more thoughtful editorial presentation improves the result.
 
-### F. Experience and Education
+### Experience and Education
 
-Use a minimal timeline or editorial two-column layout.
+Use verified information from the resume and JSON.
 
-Display only verified information.
+Present it using a refined timeline or clean editorial layout.
 
-Use restrained scroll reveals.
+Only include supported entries.
 
-### G. Achievements and Certifications
+### Achievements and Certifications
 
-Include only when supported by the uploaded data.
+Include only when verified.
 
-### H. Contact Section
+### Contact Section
 
-Create a memorable final section.
+Create a strong, minimal closing section.
 
-Suggested headline:
+Suggested heading:
 
 "Let's Build Something Meaningful."
 
-Use verified, approved contact links.
+Include approved public contact links and a clear call to action.
 
-Include a simple, accessible call to action.
+Do not expose private resume contact information without approval.
 
-### I. Footer
+### Footer
 
 Include:
 
-- My name
-- Relevant public social links
+- Name
+- Approved public social links
 - Minimal copyright text
 - Optional back-to-top interaction
 
-## 6. Animation and Interaction Guidelines
+---
 
-Use Motion for React for UI animation.
+## 7. Animation and Interaction Standards
+
+Use Motion for React when animation adds meaningful value.
 
 ### Scroll Reveals
 
-- Fade from opacity 0 to 1
-- Translate upward approximately 16–24px
-- Duration: 0.5–0.8 seconds
+- Fade in smoothly
+- Vertical movement approximately 16–24px
+- Duration around 0.5–0.8 seconds
 - Gentle easing
 - Small stagger between related elements
 
 ### Buttons
 
-- Transition duration: 0.2–0.3 seconds
+- Transition duration around 0.2–0.3 seconds
 - Subtle elevation or scale
-- Clear focus and active states
+- Clear hover, focus, and active states
 - No exaggerated bounce
 
 ### Project Cards
 
-- Maximum tilt: 3 degrees
-- Smooth pointer tracking
-- Gentle shadow change
-- Small image scale effect
-- Disable tilt for touch-only devices
-
-### 3D Object
-
-- Slow idle rotation
-- Smooth pointer-based movement
-- No sudden jumps
-- Pause or reduce animation when offscreen
-- Respect reduced-motion preferences
+- Small hover elevation
+- Gentle image zoom
+- Optional tilt limited to approximately 3 degrees
+- Disable pointer-dependent effects on touch devices
 
 ### Navigation
 
-- Smooth section scrolling
-- Subtle hover indicators
-- Clear active and focus states
+- Smooth anchor navigation
+- Subtle active-state indicators
+- Accessible mobile interactions
 
-### Important
+### General Motion Rules
 
-Do not animate everything.
+- Do not animate every element.
+- Avoid scroll-jacking.
+- Do not hide essential content behind animation.
+- Respect `prefers-reduced-motion`.
+- Prefer smooth, restrained transitions.
+- Keep interactions responsive and performant.
 
-Motion should support the content and never interfere with usability.
+---
 
-Respect `prefers-reduced-motion`.
+## 8. Responsive Design
 
-## 7. Responsive Design
+Build mobile-first.
 
-Build mobile-first and support:
+Support:
 
 - Small mobile screens from 320px
 - Standard phones
 - Tablets
 - Laptops
-- Large desktop screens
+- Large desktop displays
 
-Mobile requirements:
+Requirements:
 
-- Readable typography
-- Single-column project cards when appropriate
-- Touch-friendly navigation
 - No horizontal overflow
-- Simplified 3D
-- No hover-dependent functionality
-- Appropriate spacing and button sizes
+- Readable responsive typography
+- Touch-friendly controls
+- Accessible navigation
+- Appropriate image crops
+- Simplified 3D on mobile
+- Functional layouts without hover
+- Consistent spacing at every breakpoint
 
-## 8. Accessibility
+---
+
+## 9. Accessibility and Performance
+
+### Accessibility
 
 Implement:
 
 - Semantic HTML
-- Keyboard-accessible navigation
+- Correct heading hierarchy
+- Keyboard navigation
 - Visible focus indicators
-- Sufficient color contrast
-- Descriptive image alt text
-- Accessible button labels
+- Accessible labels
+- Descriptive alt text
+- Adequate color contrast
 - Reduced-motion support
-- Proper heading hierarchy
-- No essential content hidden behind animations
+- Touch-friendly targets
 
-## 9. Performance and SEO
-
-Prioritize real-world performance.
+### Performance
 
 Implement:
 
-- Lazy-loaded 3D scene
-- Client-only loading where browser APIs are required
-- Optimized images using `next/image` where appropriate
-- Responsive image sizes
+- Optimized images
+- Lazy-loaded 3D
 - Minimal unnecessary JavaScript
 - Efficient animation loops
-- Appropriate loading states and fallbacks
-- SEO title and description
+- Code splitting where useful
+- Appropriate static fallbacks
+- Lightweight components
+- Fast initial rendering
+
+### SEO
+
+Implement:
+
+- Relevant page title
+- Meta description
 - Open Graph metadata
-- Sitemap and robots configuration when appropriate
+- Semantic document structure
+- Sitemap and robots configuration where appropriate
 
-Avoid hydration errors and unnecessary re-renders.
+---
 
-## 10. Suggested Folder Structure
+## 10. Suggested Architecture
+
+Use a maintainable project structure similar to:
 
 ```text
-portfolio/
-├── CLAUDE.md
-├── package.json
-├── public/
-│   ├── images/
-│   └── resume/
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   └── globals.css
-│   ├── components/
-│   │   ├── Navbar.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Skills.tsx
-│   │   ├── Projects.tsx
-│   │   ├── ProjectCard.tsx
-│   │   ├── Experience.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Footer.tsx
-│   │   ├── animations/
-│   │   │   └── Reveal.tsx
-│   │   └── three/
-│   │       └── HeroScene.tsx
-│   ├── data/
-│   │   └── portfolio.json
-│   ├── lib/
-│   │   └── portfolio.ts
-│   └── types/
-│       └── portfolio.ts
-└── README.md
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+├── components/
+│   ├── Navbar.tsx
+│   ├── Hero.tsx
+│   ├── About.tsx
+│   ├── Skills.tsx
+│   ├── Projects.tsx
+│   ├── ProjectCard.tsx
+│   ├── Experience.tsx
+│   ├── Education.tsx
+│   ├── Contact.tsx
+│   ├── Footer.tsx
+│   ├── animations/
+│   │   └── Reveal.tsx
+│   └── three/
+│       └── HeroScene.tsx
+├── data/
+│   └── portfolio.json
+├── lib/
+│   └── portfolio.ts
+└── types/
+    └── portfolio.ts
 ```
 
-This is a suggested structure. Adapt it to the existing project instead of unnecessarily replacing files.
+This is a suggested architecture, not a requirement to recreate existing files.
+
+Prefer reusable components and strongly typed data.
+
+---
 
 ## 11. Implementation Workflow
 
-### Phase 1 — Inspect and Plan
-
-Before implementation:
+### Phase 1 — Inspect
 
 1. Inspect the repository.
-2. Read available JSON and resume files.
-3. Check installed dependencies.
-4. Identify the actual portfolio content.
-5. Propose a short implementation plan.
+2. Read `CLAUDE.md`.
+3. Read the UI UX Pro Max skill.
+4. Read the portfolio JSON.
+5. Read the resume.
+6. Inspect the profile image.
+7. Check available dependencies.
+8. Check whether 21st MCP tools are available.
+9. Identify missing or conflicting data.
 
-If essential files are missing, ask me to provide them.
+Provide a concise summary of verified content and a short implementation plan.
 
-### Phase 2 — Build the Foundation
+Do not stop after planning unless essential information or permission is required.
 
-- Set up or adapt Next.js.
-- Configure fonts and design tokens.
-- Create the responsive layout.
-- Implement navigation and core sections.
-- Connect components to real portfolio data.
+### Phase 2 — Design System
 
-### Phase 3 — Add Interactions
+- Establish fonts and colors.
+- Define layout containers and spacing.
+- Plan responsive typography.
+- Create reusable UI primitives.
+- Use the UI UX Pro Max skill for design guidance.
+- Use 21st MCP selectively to find suitable components.
 
-- Scroll reveals
-- Button hover states
-- Project card interactions
-- Navigation transitions
-- Responsive mobile menu
+### Phase 3 — Implement Website
 
-### Phase 4 — Add 3D
+- Build navigation.
+- Build hero.
+- Build About section with profile image.
+- Build skills and projects.
+- Build verified experience and education sections.
+- Build contact and footer.
+- Connect all content to actual data.
 
-- Implement the hero scene.
-- Optimize rendering.
-- Add pointer interaction.
-- Provide mobile and reduced-motion fallbacks.
+### Phase 4 — Add Interactions and 3D
+
+- Add scroll reveals.
+- Add refined hover interactions.
+- Implement responsive navigation.
+- Add the lightweight 3D hero.
+- Implement reduced-motion and mobile fallbacks.
 
 ### Phase 5 — Polish
 
@@ -438,73 +555,76 @@ Review:
 - Typography
 - Spacing
 - Alignment
-- Responsive layouts
 - Color consistency
-- Animation timing
-- Accessibility
+- Card layouts
+- Image presentation
+- Mobile responsiveness
+- Interaction quality
 - Loading performance
-
-Remove unnecessary visual clutter.
+- Accessibility
 
 ### Phase 6 — Verify
 
-Run the project's available checks, such as:
+Run available project checks, such as:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-Only run commands supported by the actual `package.json`.
+Only execute scripts supported by the actual project configuration.
 
 Fix errors found during verification.
 
-Do not claim tests passed unless they actually ran successfully.
+If browser-testing tools are available, use them to inspect desktop and mobile layouts.
 
-## 12. Working Rules for Claude Code
+Never claim tests passed unless they actually ran.
 
-When implementing:
+---
+
+## 12. Claude Code Working Rules
 
 1. Read existing files before editing them.
-2. Preserve useful existing functionality.
-3. Prefer small, reusable components.
-4. Use strict TypeScript types.
-5. Avoid `any` unless justified.
-6. Keep content separate from UI components.
-7. Use semantic HTML.
-8. Avoid placeholder content in the final website unless clearly identified.
-9. Do not introduce dependencies without a reason.
-10. Do not overwrite user files unnecessarily.
-11. Make actual code changes rather than only describing them.
-12. Explain any blockers clearly.
-13. Summarize changed files after implementation.
-14. Provide commands to run and preview the website.
+2. Preserve useful existing code.
+3. Make actual code changes instead of only explaining solutions.
+4. Prefer clean, maintainable TypeScript.
+5. Avoid unnecessary dependencies.
+6. Keep content separate from presentation.
+7. Never invent personal information.
+8. Do not modify or expose MCP credentials.
+9. Do not recreate `.mcp.json` unless explicitly requested.
+10. Ask permission before destructive operations.
+11. Review third-party code before integrating it.
+12. Keep the design visually consistent.
+13. Do not stop after generating a plan.
+14. Fix build and type errors when possible.
+15. Summarize completed work and remaining limitations.
+
+---
 
 ## 13. Definition of Done
 
-The portfolio is complete when:
+The project is complete when:
 
-- [ ] Real portfolio JSON data is integrated
-- [ ] Resume information has been reviewed
-- [ ] All relevant sections are implemented
-- [ ] The design is original and premium
-- [ ] Desktop and mobile layouts work
+- [ ] Verified JSON and resume content is integrated
+- [ ] Professional profile image is displayed correctly
+- [ ] Premium minimalist design is implemented
+- [ ] Relevant portfolio sections are complete
 - [ ] Navigation works
 - [ ] Project links are valid or omitted
-- [ ] 3D hero has a suitable fallback
-- [ ] Reduced-motion support works
-- [ ] Keyboard accessibility is supported
-- [ ] No obvious horizontal overflow exists
-- [ ] Available build and lint checks pass
-- [ ] The project can be run locally
+- [ ] Interactive 3D hero works with fallbacks
+- [ ] Animations respect reduced-motion settings
+- [ ] Mobile and desktop layouts are responsive
+- [ ] Accessibility fundamentals are implemented
+- [ ] SEO metadata is configured
+- [ ] Available build checks pass
+- [ ] Website can be launched locally
 - [ ] Deployment instructions are documented
 
 ## Final Design Principle
 
-**Make it feel expensive through simplicity.**
+**Make it feel premium through simplicity.**
 
-Use beautiful typography, carefully balanced whitespace, polished project showcases, subtle interaction, and one memorable 3D hero.
+Use exceptional typography, deliberate whitespace, authentic content, elegant interactions, carefully selected components, and one memorable 3D visual.
 
-Avoid making the portfolio look like a generic template or an overloaded animation demo.
-
-The finished website should be elegant, personal, fast, accessible, and memorable.
+The result should feel original, sophisticated, fast, accessible, and personal.

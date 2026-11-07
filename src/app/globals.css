@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/* `dark:` follows the explicit theme attribute set by the theme script. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens (see CLAUDE.md §5)                                    */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-ink: #171717;
+  --color-muted: #71717a;
+  --color-line: #e8e8e8;
+  --color-line-strong: #d6d6d6;
+  --color-subtle: #f3f3f0;
+  /* Text on solid ink surfaces (primary buttons). */
+  --color-on-ink: #ffffff;
+  --color-ink-hover: #2a2a2a;
+  /* Always-dark closing panel. */
+  --color-panel: #171717;
+  --color-accent: #3478f6;
+  /* Darker accent for small text: 5.5:1 on white (AA). */
+  --color-accent-strong: #1f5fd6;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 1.5rem;
+  --radius-card-lg: 1.75rem;
+
+  --shadow-soft: 0 1px 2px rgb(23 23 23 / 0.04), 0 8px 24px -12px rgb(23 23 23 / 0.08);
+  --shadow-lift: 0 2px 4px rgb(23 23 23 / 0.04), 0 24px 48px -20px rgb(23 23 23 / 0.18);
+
+  --glow-accent: rgb(52 120 246 / 0.07);
+  --glow-ink: rgb(23 23 23 / 0.025);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Fluid type scale */
+  --text-display: clamp(2.75rem, 1.6rem + 5.2vw, 6rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.045em;
+  --text-headline: clamp(2rem, 1.35rem + 2.9vw, 3.75rem);
+  --text-headline--line-height: 1.05;
+  --text-headline--letter-spacing: -0.035em;
+  --text-title: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.02em;
+  --text-lede: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+  --text-lede--line-height: 1.6;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark theme: same roles, re-tuned for a near-black canvas.           */
+/* ------------------------------------------------------------------ */
+:root {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0b0b0c;
+  --color-surface: #151517;
+  --color-ink: #f5f5f4;
+  --color-muted: #a1a1aa; /* 7.6:1 on bg */
+  --color-line: #26262a;
+  --color-line-strong: #3a3a3f;
+  --color-subtle: #1e1e21;
+  --color-accent: #3478f6;
+  --color-accent-strong: #7aa9ff; /* 8:1 on bg */
+  --color-on-ink: #0b0b0c;
+  --color-ink-hover: #e2e2df;
+  --color-panel: #151517;
+
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.4), 0 24px 48px -20px rgb(0 0 0 / 0.75);
+
+  --glow-accent: rgb(52 120 246 / 0.12);
+  --glow-ink: rgb(255 255 255 / 0.025);
+}
+
+/* Switch themes in one step instead of element-by-element transitions. */
+[data-theme-switching] *:not([data-theme-icon]),
+[data-theme-switching] *::before,
+[data-theme-switching] *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 18%, transparent);
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilities                                                           */
+/* ------------------------------------------------------------------ */
+@utility container-page {
+  width: 100%;
+  max-width: 80rem; /* 1280px */
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility section-space {
+  padding-block: 6rem;
+  @media (width >= 48rem) {
+    padding-block: 8rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 10rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+}
+
+@utility text-balance-safe {
+  text-wrap: balance;
+}
+
+/* Subtle grain-free paper background for the hero. */
+@utility hero-glow {
+  background:
+    radial-gradient(60% 50% at 75% 40%, var(--glow-accent), transparent 70%),
+    radial-gradient(50% 40% at 20% 10%, var(--glow-ink), transparent 70%);
+}
+
+/* ------------------------------------------------------------------ */
+/* Static 3D fallback motion                                           */
+/* ------------------------------------------------------------------ */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(var(--r, 0deg));
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 7s var(--ease-out-soft) infinite;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
