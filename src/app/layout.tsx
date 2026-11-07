@@ -1,24 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { MotionProvider } from "@/components/animations/MotionProvider";
 import { ScrollProgressButton } from "@/components/interactions/ScrollProgressButton";
 import { Navbar } from "@/components/Navbar";
 import { site } from "@/data/site";
+import { geistMono, geistSans } from "@/lib/fonts";
 import { contactLinks, personalInfo } from "@/lib/portfolio";
 import { themeInitScript } from "@/lib/theme-script";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

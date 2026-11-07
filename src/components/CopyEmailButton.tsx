@@ -25,7 +25,7 @@ export function CopyEmailButton({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-[0.9375rem] font-medium text-white transition-[background-color,border-color,transform] duration-250 hover:border-white/30 hover:bg-white/10 active:scale-[0.98] sm:h-13"
+      className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-line bg-surface/60 px-6 text-[0.9375rem] font-medium text-ink backdrop-blur-md transition-[background-color,border-color,transform] duration-250 hover:border-line-strong hover:bg-surface active:scale-[0.98]"
     >
       {copied ? (
         <Check aria-hidden className="size-4" />

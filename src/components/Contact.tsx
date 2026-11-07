@@ -2,68 +2,76 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { Magnetic } from "@/components/interactions/Magnetic";
+import { DotField } from "@/components/ui/dot-field";
 import { contact } from "@/data/site";
+import { geistSans } from "@/lib/fonts";
 import { contactLinks, email } from "@/lib/portfolio";
+
+/** Brand accent from the design tokens (--color-accent). */
+const ACCENT = "#3478F6";
 
 export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="pb-6 pt-6 sm:pb-10">
       <div className="container-page">
-        <Reveal className="relative isolate overflow-hidden rounded-[2rem] bg-panel px-6 py-20 text-white sm:px-12 sm:py-24 lg:px-20 lg:py-32 dark:ring-1 dark:ring-line">
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 bg-[radial-gradient(60%_80%_at_85%_0%,rgba(52,120,246,0.28),transparent_60%),radial-gradient(40%_60%_at_0%_100%,rgba(255,255,255,0.06),transparent_70%)]"
+        {/*
+          Closing statement drawn from a field of dots. Scroll-scatter is off:
+          the final call to action should stay assembled at the end of the page.
+        */}
+        <div className="overflow-hidden rounded-[2rem] border border-line">
+          <DotField
+            headline={contact.heading}
+            headingLevel="h2"
+            headingId="contact-title"
+            eyebrow="06 · Contact"
+            description={contact.body}
+            accent={ACCENT}
+            fontFamily={geistSans.style.fontFamily}
+            fontWeight={600}
+            scrollScatter={false}
+            height="min(80svh, 760px)"
+            minHeight={520}
+            maxFontSize={88}
+            actions={
+              email ? (
+                <>
+                  <Magnetic>
+                    <a
+                      href={`mailto:${email}`}
+                      className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[0.9375rem] font-medium text-on-ink shadow-soft transition-[transform,background-color] duration-250 hover:-translate-y-0.5 hover:bg-ink-hover active:scale-[0.98]"
+                    >
+                      <Mail aria-hidden className="size-4" />
+                      Start a conversation
+                    </a>
+                  </Magnetic>
+                  <Magnetic>
+                    <CopyEmailButton email={email} />
+                  </Magnetic>
+                </>
+              ) : null
+            }
           />
+        </div>
 
-          <p className="flex items-center gap-3 text-[0.8125rem] font-medium text-white/60">
-            <span className="font-mono text-xs tabular-nums">06</span>
-            <span aria-hidden className="h-px w-8 bg-white/20" />
-            Contact
-          </p>
-
-          <h2
-            id="contact-title"
-            className="mt-6 max-w-4xl text-[clamp(2.5rem,1.4rem+4.6vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.045em] [text-wrap:balance]"
-          >
-            {contact.heading}
-          </h2>
-          <p className="mt-6 max-w-xl text-lede text-white/65">{contact.body}</p>
-
-          {email ? (
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Magnetic>
-              <a
-                href={`mailto:${email}`}
-                className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-[0.9375rem] font-medium text-panel transition-[transform,background-color] duration-250 hover:-translate-y-0.5 hover:bg-white/90 active:scale-[0.98] sm:h-13 sm:px-7"
-              >
-                <Mail aria-hidden className="size-4" />
-                Start a conversation
-              </a>
-              </Magnetic>
-              <Magnetic>
-                <CopyEmailButton email={email} />
-              </Magnetic>
-            </div>
-          ) : null}
-
-          <ul className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+        <Reveal>
+          <ul className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3">
             {contactLinks.map((link) => (
-              <li key={link.label} className="min-w-0 bg-panel">
+              <li key={link.label} className="min-w-0 bg-surface">
                 <a
                   href={link.href}
                   {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   aria-label={`${link.label}: ${link.display}${link.external ? " (opens in a new tab)" : ""}`}
-                  className="group flex min-h-20 items-center justify-between gap-4 px-5 py-4 transition-colors duration-250 hover:bg-white/[0.04]"
+                  className="group flex min-h-20 items-center justify-between gap-4 px-5 py-4 transition-colors duration-250 hover:bg-subtle"
                 >
                   <span className="min-w-0">
-                    <span className="block text-xs text-white/50">{link.label}</span>
-                    <span className="mt-1 block truncate text-[0.9375rem] text-white/90">
+                    <span className="block text-xs text-muted">{link.label}</span>
+                    <span className="mt-1 block truncate text-[0.9375rem] text-ink">
                       {link.display}
                     </span>
                   </span>
                   <ArrowUpRight
                     aria-hidden
-                    className="size-4 shrink-0 text-white/50 transition-transform duration-250 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                    className="size-4 shrink-0 text-muted transition-transform duration-250 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
                   />
                 </a>
               </li>

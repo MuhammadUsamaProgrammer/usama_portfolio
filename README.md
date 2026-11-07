@@ -100,6 +100,8 @@ Reusable pieces live in `src/components/interactions/`:
 | `Magnetic` | Hero and contact CTAs | Buttons lean toward the cursor (max 8px) |
 | `SpotlightGroup` + `.spotlight` | Skills | Cursor light inside cards and along neighbouring borders |
 | `TiltFrame` | About portrait | Subtle 3D tilt with a soft glare |
+| `ui/liquid-text` | Hero name | Name rendered as a viscous WebGL2 surface; drag through a letter to pull ink off it. Real `<h1>` kept for SEO; plain-text fallback without WebGL |
+| `ui/dot-field` | Contact | Closing headline assembled from a dot grid; cursor pushes the dots (canvas, no dependencies) |
 
 Project cards also tilt, show a "View" label that follows the cursor over the cover, and their imagery drifts slightly on scroll; the navbar has a hover pill that slides between links.
 

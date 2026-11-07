@@ -5,7 +5,9 @@ import { Magnetic } from "@/components/interactions/Magnetic";
 import { ScrollDrift } from "@/components/interactions/ScrollDrift";
 import { HeroVisual } from "@/components/three/HeroVisual";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { LiquidText } from "@/components/ui/liquid-text";
 import { hero } from "@/data/site";
+import { geistSans } from "@/lib/fonts";
 import { personalInfo } from "@/lib/portfolio";
 
 export function Hero() {
@@ -31,12 +33,36 @@ export function Hero() {
             </p>
           </Reveal>
 
-          <h1
-            id="home-title"
-            className="mt-7 text-display font-semibold text-ink [text-wrap:balance]"
-          >
+          {/* Real heading for search engines and screen readers. */}
+          <h1 id="home-title" className="sr-only">
             {personalInfo.name}
           </h1>
+
+          {/*
+            Visual heading: the name as a viscous liquid surface (WebGL2). Drag
+            through a letter to pull a bead of ink off it. Height is reserved
+            up front (font size = 10.74% of the column width, height = 1.6x)
+            so the page does not shift when the canvas first draws.
+          */}
+          <div aria-hidden className="@container mt-7">
+            <div className="min-h-[min(17.2cqw,153.6px)]">
+              <LiquidText
+                text={personalInfo.name}
+                align="left"
+                fontSize={96}
+                fontWeight={600}
+                fontFamily={geistSans.style.fontFamily}
+                accentColor="#3478F6"
+                gloss={0.08}
+                viscosity={0.55}
+              />
+            </div>
+          </div>
+          <noscript>
+            <p aria-hidden className="mt-7 text-display font-semibold text-ink">
+              {personalInfo.name}
+            </p>
+          </noscript>
 
           <Reveal delay={0.08} y={18}>
             <p className="mt-6 max-w-2xl text-[clamp(1.375rem,1.1rem+1.1vw,2rem)] font-medium leading-[1.25] tracking-[-0.02em] text-muted [text-wrap:balance]">
