@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, type CSSProperties } from "react";
+import { IPhoneFrame, MacBookFrame, displayHost } from "@/components/devices";
 import { useMotionAllowed } from "@/components/interactions/hooks";
 import type { ProjectImage, ShowcaseProject } from "@/types/portfolio";
 
@@ -26,15 +27,13 @@ const LAYOUTS = {
   ],
 } as const;
 
-/** Raw UI capture inside a minimal phone bezel. */
+/** Raw UI capture shown on an iPhone. */
 function PhoneShot({ image, className }: { image: ProjectImage; className: string }) {
   return (
-    <div
-      className={`absolute aspect-[9/19.5] rounded-[13%/6%] bg-[#0f0f10] p-[2.6%] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.5)] ring-1 ring-black/10 ${className}`}
-    >
-      <div className="relative size-full overflow-hidden rounded-[10.5%/4.9%] bg-white">
+    <div className={`absolute aspect-[0.478] ${className}`}>
+      <IPhoneFrame>
         <Image src={image.src} alt="" fill sizes={PHONE_SIZES} className="object-cover object-top" />
-      </div>
+      </IPhoneFrame>
     </div>
   );
 }
@@ -51,18 +50,18 @@ function ArtworkShot({ image, className }: { image: ProjectImage; className: str
   );
 }
 
-function BrowserShot({ image }: { image: ProjectImage }) {
+function LaptopShot({ image, url }: { image: ProjectImage; url?: string }) {
   return (
-    <div className="absolute inset-x-[8%] top-[13%] bottom-[-12%] flex flex-col overflow-hidden rounded-t-2xl bg-white shadow-[0_40px_80px_-30px_rgba(0,0,0,0.45)] ring-1 ring-black/10">
-      <div className="flex items-center gap-1.5 border-b border-black/5 bg-[#f6f6f4] px-3 py-2.5">
-        {[0, 1, 2].map((i) => (
-          <span key={i} className="size-2 rounded-full bg-black/12" />
-        ))}
-        <span className="ml-3 h-4 max-w-[60%] flex-1 rounded-full bg-black/5" />
-      </div>
-      <div className="relative flex-1">
-        <Image src={image.src} alt="" fill sizes={BROWSER_SIZES} className="object-cover object-top" />
-      </div>
+    <div className="absolute top-1/2 left-1/2 aspect-[1.631] w-[84%] -translate-x-1/2 -translate-y-[47%]">
+      <MacBookFrame url={url}>
+        <Image
+          src={image.src}
+          alt=""
+          fill
+          sizes={BROWSER_SIZES}
+          className="object-cover object-top transition-[object-position] duration-[4s] ease-in-out group-hover:object-bottom motion-reduce:transition-none motion-reduce:group-hover:object-top"
+        />
+      </MacBookFrame>
     </div>
   );
 }
@@ -70,7 +69,9 @@ function BrowserShot({ image }: { image: ProjectImage }) {
 function MediaArt({ project, rich }: { project: ShowcaseProject; rich: boolean }) {
   const screens = project.media?.screens ?? [];
 
-  if (project.platform === "web") return <BrowserShot image={screens[0]} />;
+  if (project.platform === "web") {
+    return <LaptopShot image={screens[0]} url={displayHost(project.webLink)} />;
+  }
 
   const layout = rich && screens.length >= 3 ? LAYOUTS.three : LAYOUTS.two;
   // Front image is screens[0]; back images take the next ones in order.
@@ -107,10 +108,9 @@ function Skeleton({ className = "" }: { className?: string }) {
 
 function AbstractPhone({ title, className }: { title: string; className: string }) {
   return (
-    <div
-      className={`absolute aspect-[9/19] rounded-[14%/6.5%] border border-white/70 bg-white/90 p-[3%] shadow-[0_40px_80px_-30px_rgba(23,23,23,0.35)] ${className}`}
-    >
-      <div className="relative flex h-full flex-col gap-3 overflow-hidden rounded-[11%/5%] bg-[#fbfbfa] p-[9%] pt-[16%]">
+    <div className={`absolute aspect-[0.478] ${className}`}>
+    <IPhoneFrame>
+      <div className="flex h-full flex-col gap-3 bg-[#fbfbfa] p-[9%] pt-[22%]">
         <div className="flex items-center gap-2.5">
           <span className="grid aspect-square w-[28%] place-items-center rounded-[28%] bg-[var(--ink)] text-[0.7rem] font-semibold text-white">
             {monogram(title)}
@@ -126,6 +126,7 @@ function AbstractPhone({ title, className }: { title: string; className: string 
         ))}
         <div className="mt-auto h-7 rounded-full bg-[var(--ink)]/85" />
       </div>
+    </IPhoneFrame>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { ArrowUpRight, ChevronDown, Images } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { useState, type PointerEvent } from "react";
 import { useFinePointer } from "@/components/interactions/hooks";
+import { displayHost } from "@/components/devices";
 import { ProjectCover } from "@/components/ProjectCover";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import type { ShowcaseProject } from "@/types/portfolio";
@@ -258,6 +259,14 @@ export function ProjectCard({ project, variant, reverse = false }: ProjectCardPr
           title={project.title}
           icon={icon}
           screens={screens}
+          device={
+            project.platform === "web"
+              ? "macbook"
+              : project.mediaStyle === "screens"
+                ? "iphone"
+                : null
+          }
+          url={displayHost(project.webLink)}
           onClose={() => setGalleryOpen(false)}
         />
       ) : null}

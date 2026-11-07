@@ -19,13 +19,20 @@ import {
   type KeyboardEvent,
   type MouseEvent,
 } from "react";
+import { IPHONE_ASPECT, IPhoneFrame, MACBOOK_ASPECT, MacBookFrame } from "@/components/devices";
 import { useMediaQuery, useMotionAllowed } from "@/components/interactions/hooks";
 import type { ProjectImage } from "@/types/portfolio";
+
+export type GalleryDevice = "iphone" | "macbook" | null;
 
 type ProjectGalleryProps = {
   title: string;
   icon: ProjectImage | null;
   screens: ProjectImage[];
+  /** Frame raw screenshots in a device; `null` shows them as they are. */
+  device?: GalleryDevice;
+  /** Address shown in the MacBook's browser toolbar. */
+  url?: string;
   initialIndex?: number;
   onClose: () => void;
 };
@@ -64,6 +71,8 @@ export function ProjectGallery({
   title,
   icon,
   screens,
+  device = null,
+  url,
   initialIndex = 0,
   onClose,
 }: ProjectGalleryProps) {
@@ -111,10 +120,12 @@ export function ProjectGallery({
     const gap = compact ? 14 : 28;
     const maxHeight = stage.height;
     let left = 0;
+    const frameAspect =
+      device === "iphone" ? IPHONE_ASPECT : device === "macbook" ? MACBOOK_ASPECT : null;
     const slides: SlideBox[] = screens.map((screen) => {
-      const aspect = screen.width / screen.height;
-      // Wide (desktop) screenshots get more room on phones; neighbours still peek.
-      const maxWidth = stage.width * (compact ? (aspect > 1 ? 0.88 : 0.78) : 0.6);
+      const aspect = frameAspect ?? screen.width / screen.height;
+      // Wide slides (laptop, desktop shots) get more room; neighbours still peek.
+      const maxWidth = stage.width * (compact ? (aspect > 1 ? 0.88 : 0.78) : aspect > 1 ? 0.64 : 0.6);
       let height = maxHeight;
       let width = height * aspect;
       if (width > maxWidth) {
@@ -126,7 +137,7 @@ export function ProjectGallery({
       return box;
     });
     return { slides, compact };
-  }, [stage, screens]);
+  }, [stage, screens, device]);
 
   const offsetFor = useCallback(
     (i: number) => {
@@ -328,22 +339,50 @@ export function ProjectGallery({
                       animate={slideState(distance)}
                       transition={transition}
                     >
-                      <Image
-                        src={screen.src}
-                        alt={screen.alt}
-                        width={screen.width}
-                        height={screen.height}
-                        sizes={`${Math.ceil(box.width)}px`}
-                        loading={distance <= 1 ? "eager" : "lazy"}
-                        draggable={false}
-                        className={`size-full select-none object-contain ring-1 ring-white/10 transition-shadow duration-500 ${
-                          portrait
-                            ? layout.compact
-                              ? "rounded-[1.25rem]"
-                              : "rounded-[1.75rem]"
-                            : "rounded-xl"
-                        } ${active ? "shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]" : ""}`}
-                      />
+                      {device === "iphone" ? (
+                        <IPhoneFrame>
+                          <Image
+                            src={screen.src}
+                            alt={screen.alt}
+                            fill
+                            sizes={`${Math.ceil(box.width)}px`}
+                            loading={distance <= 1 ? "eager" : "lazy"}
+                            draggable={false}
+                            className="select-none object-cover object-top"
+                          />
+                        </IPhoneFrame>
+                      ) : device === "macbook" ? (
+                        <MacBookFrame url={url}>
+                          <Image
+                            src={screen.src}
+                            alt={screen.alt}
+                            fill
+                            sizes={`${Math.ceil(box.width)}px`}
+                            loading={distance <= 1 ? "eager" : "lazy"}
+                            draggable={false}
+                            className={`select-none object-cover object-top ${
+                              active && motionAllowed ? "animate-[screen-pan_12s_ease-in-out_infinite_alternate]" : ""
+                            }`}
+                          />
+                        </MacBookFrame>
+                      ) : (
+                        <Image
+                          src={screen.src}
+                          alt={screen.alt}
+                          width={screen.width}
+                          height={screen.height}
+                          sizes={`${Math.ceil(box.width)}px`}
+                          loading={distance <= 1 ? "eager" : "lazy"}
+                          draggable={false}
+                          className={`size-full select-none object-contain ring-1 ring-white/10 transition-shadow duration-500 ${
+                            portrait
+                              ? layout.compact
+                                ? "rounded-[1.25rem]"
+                                : "rounded-[1.75rem]"
+                              : "rounded-xl"
+                          } ${active ? "shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)]" : ""}`}
+                        />
+                      )}
                     </motion.div>
                   );
                 })}

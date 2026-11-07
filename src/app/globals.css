@@ -262,6 +262,18 @@
   }
 }
 
+/* Web screenshots scroll inside the laptop screen, pausing at each end. */
+@keyframes screen-pan {
+  0%,
+  12% {
+    object-position: 50% 0%;
+  }
+  88%,
+  100% {
+    object-position: 50% 100%;
+  }
+}
+
 @keyframes gallery-fade {
   from {
     opacity: 0;

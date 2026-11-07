@@ -59,7 +59,7 @@ public/images/projects/gotstuck/
 - **Cover:** the first screenshot is the hero image of the card; featured cards also fan out the 2nd and 3rd.
 - **Formats:** `.webp` (preferred), `.png` or `.jpg`.
 - **Presentation** (`mediaStyle` in `site.ts`):
-  - `"screens"` (default): raw UI captures, placed in a phone frame (or a browser frame when `platform` is `"web"`). Best at a 9:19.5 phone ratio.
+  - `"screens"` (default): raw UI captures, shown on an iPhone (or a MacBook when `platform` is `"web"`), both on the card and in the gallery. Phone shots look best at 9:19.5; tall web shots scroll inside the laptop screen. Frames live in `src/components/devices.tsx`.
   - `"artwork"`: store graphics or photos that already include a device, shown as they are.
 
 `npm run media` writes `src/data/project-media.json` (commit it). It warns about misnamed files or folders that match no project, and fails on duplicate numbers.
