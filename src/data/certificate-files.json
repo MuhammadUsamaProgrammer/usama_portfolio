@@ -1,0 +1,38 @@
+{
+  "python-for-data-science-and-ai": {
+    "pdf": "/pdf/certificates/python-for-data-science-and-ai.pdf",
+    "sizeBytes": 316227,
+    "preview": {
+      "src": "/pdf/certificates/python-for-data-science-and-ai.webp",
+      "width": 1200,
+      "height": 927
+    }
+  },
+  "ai-foundations": {
+    "pdf": "/pdf/certificates/ai-foundations.pdf",
+    "sizeBytes": 319818,
+    "preview": {
+      "src": "/pdf/certificates/ai-foundations.webp",
+      "width": 1200,
+      "height": 927
+    }
+  },
+  "advanced-flutter-app-development": {
+    "pdf": "/pdf/certificates/advanced-flutter-app-development.pdf",
+    "sizeBytes": 311611,
+    "preview": {
+      "src": "/pdf/certificates/advanced-flutter-app-development.webp",
+      "width": 1200,
+      "height": 927
+    }
+  },
+  "foundations-of-project-management": {
+    "pdf": "/pdf/certificates/foundations-of-project-management.pdf",
+    "sizeBytes": 300181,
+    "preview": {
+      "src": "/pdf/certificates/foundations-of-project-management.webp",
+      "width": 1200,
+      "height": 927
+    }
+  }
+}

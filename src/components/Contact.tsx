@@ -23,7 +23,7 @@ export function Contact() {
             headline={contact.heading}
             headingLevel="h2"
             headingId="contact-title"
-            eyebrow="06 · Contact"
+            eyebrow="07 · Contact"
             description={contact.body}
             accent={ACCENT}
             fontFamily={geistSans.style.fontFamily}
@@ -54,7 +54,7 @@ export function Contact() {
         </div>
 
         <Reveal>
-          <ul className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3">
+          <ul className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {contactLinks.map((link) => (
               <li key={link.label} className="min-w-0 bg-surface">
                 <a

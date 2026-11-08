@@ -43,7 +43,10 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
-const sameAs = contactLinks.filter((l) => l.external).map((l) => l.href);
+// Profiles only (a WhatsApp chat link is not a profile page).
+const sameAs = contactLinks
+  .filter((l) => l.kind === "linkedin" || l.kind === "github")
+  .map((l) => l.href);
 
 const personJsonLd = {
   "@context": "https://schema.org",

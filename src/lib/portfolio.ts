@@ -157,6 +157,14 @@ export const timeline: TimelineEntry[] = experiences.map((exp) => {
 
 /* ------------------------------ Contact ----------------------------- */
 
+/** "https://wa.me/923180063687" → "+92 318 0063687" */
+function phoneFromWhatsApp(url: string): string {
+  const digits = url.replace(/\D/g, "");
+  return digits.startsWith("92") && digits.length === 12
+    ? `+92 ${digits.slice(2, 5)} ${digits.slice(5)}`
+    : `+${digits}`;
+}
+
 /** "https://github.com/user/" → "user" */
 function handleFromUrl(url: string): string {
   const segments = url.replace(/\/+$/, "").split("/");
@@ -168,11 +176,13 @@ export const contactLinks: ContactLink[] = publicContactKeys.flatMap((key): Cont
   if (!value) return [];
   switch (key) {
     case "email":
-      return [{ label: "Email", href: `mailto:${value}`, display: value, external: false }];
+      return [{ kind: "email", label: "Email", href: `mailto:${value}`, display: value, external: false }];
     case "linkedin":
-      return [{ label: "LinkedIn", href: value, display: handleFromUrl(value), external: true }];
+      return [{ kind: "linkedin", label: "LinkedIn", href: value, display: handleFromUrl(value), external: true }];
     case "github":
-      return [{ label: "GitHub", href: value, display: handleFromUrl(value), external: true }];
+      return [{ kind: "github", label: "GitHub", href: value, display: handleFromUrl(value), external: true }];
+    case "whatsapp":
+      return [{ kind: "whatsapp", label: "WhatsApp", href: value, display: phoneFromWhatsApp(value), external: true }];
     default:
       return [];
   }

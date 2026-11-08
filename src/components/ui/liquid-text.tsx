@@ -29,6 +29,7 @@ import {
 } from "./liquid-text-utils/liquid-text-core-palette";
 
 export interface LiquidTextProps {
+  /** The word(s) to render. Use "\n" for line breaks. */
   text?: string;
   /** Ink colour. Defaults to the tone's text colour. */
   color?: string;
@@ -146,11 +147,18 @@ interface Layout {
   tracking: number;
   baseline: number;
   textWidth: number;
-  /** Horizontal centre of the word in CSS px. */
+  /** Horizontal centre of the widest line in CSS px. */
   textX: number;
+  /** Lines of text and the baseline of each, in CSS px. */
+  lines: string[];
+  baselines: number[];
+  align: "center" | "left";
   inkTop: number;
   inkBottom: number;
 }
+
+/** Line height for stacked lines, as a multiple of the font size. */
+const LINE_HEIGHT = 0.94;
 
 function computeLayout(
   width: number,
@@ -162,6 +170,8 @@ function computeLayout(
 ): Layout | null {
   const ctx = getScratch();
   if (!ctx || width < 8) return null;
+  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  if (lines.length === 0) return null;
   const setFont = (px: number) => {
     ctx.font = `${weight} ${px}px ${family}`;
     if ("letterSpacing" in ctx)
@@ -170,27 +180,36 @@ function computeLayout(
       ).letterSpacing = `${-0.025 * px}px`;
   };
   setFont(100);
-  const w100 = Math.max(1, ctx.measureText(text).width);
+  const w100 = Math.max(1, ...lines.map((l) => ctx.measureText(l).width));
   const fill = align === "left" ? 0.94 : 0.82;
   const fontSize = Math.max(14, Math.min(maxFont, (width * fill * 100) / w100));
   setFont(fontSize);
-  const m = ctx.measureText(text);
-  const asc = m.actualBoundingBoxAscent || fontSize * 0.72;
-  const desc = m.actualBoundingBoxDescent || 0;
-  const height = Math.round(fontSize * 1.6);
-  const baseline = height * 0.53 + (asc - desc) / 2;
-  const textX = align === "left" ? fontSize * 0.02 + m.width / 2 : width / 2;
+  const metrics = lines.map((l) => ctx.measureText(l));
+  const asc = Math.max(...metrics.map((m) => m.actualBoundingBoxAscent || fontSize * 0.72));
+  const desc = Math.max(...metrics.map((m) => m.actualBoundingBoxDescent || 0));
+  const textWidth = Math.max(...metrics.map((m) => m.width));
+  const lh = fontSize * LINE_HEIGHT;
+  const height = Math.round(fontSize * (1.6 + LINE_HEIGHT * (lines.length - 1)));
+  // Centre the ink block, nudged down a touch to leave room for beads lifted off the top.
+  const centerY = height / 2 + fontSize * 0.048;
+  const first = centerY + (asc - desc) / 2 - ((lines.length - 1) * lh) / 2;
+  const baselines = lines.map((_, i) => first + i * lh);
+  const left = fontSize * 0.02;
+  const textX = align === "left" ? left + textWidth / 2 : width / 2;
   return {
     width,
     height,
     fontSize,
     font: `${weight} ${fontSize}px ${family}`,
     tracking: -0.025 * fontSize,
-    baseline,
-    textWidth: m.width,
+    baseline: first,
+    textWidth,
     textX,
-    inkTop: baseline - asc,
-    inkBottom: baseline + desc,
+    lines,
+    baselines,
+    align,
+    inkTop: first - asc,
+    inkBottom: baselines[baselines.length - 1] + desc,
   };
 }
 
@@ -251,7 +270,7 @@ interface Field {
   scale: number; // texels per CSS px
 }
 
-function buildField(layout: Layout, text: string): Field | null {
+function buildField(layout: Layout): Field | null {
   const scale = Math.min(1.25, 1800 / layout.width);
   const w = Math.max(2, Math.round(layout.width * scale));
   const h = Math.max(2, Math.round(layout.height * scale));
@@ -266,10 +285,16 @@ function buildField(layout: Layout, text: string): Field | null {
     (
       ctx as CanvasRenderingContext2D & { letterSpacing: string }
     ).letterSpacing = `${layout.tracking}px`;
-  ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
   ctx.fillStyle = "#fff";
-  ctx.fillText(text, layout.textX, layout.baseline);
+  if (layout.align === "left") {
+    ctx.textAlign = "left";
+    const x = layout.textX - layout.textWidth / 2;
+    layout.lines.forEach((line, i) => ctx.fillText(line, x, layout.baselines[i]));
+  } else {
+    ctx.textAlign = "center";
+    layout.lines.forEach((line, i) => ctx.fillText(line, layout.textX, layout.baselines[i]));
+  }
   const img = ctx.getImageData(0, 0, w, h).data;
 
   const n = w * h;
@@ -941,7 +966,7 @@ export function LiquidText({
       if (cancelled) return;
       const lay = computeLayout(width, text, family, fontWeight, fontSize, align);
       if (!lay) return;
-      const field = buildField(lay, text);
+      const field = buildField(lay);
       if (!field) return;
       layoutRef.current = lay;
       fieldRef.current = field;
@@ -1105,7 +1130,7 @@ export function LiquidText({
   );
   useVisibleLoop(wrapRef, frame, { enabled: supported && !still });
 
-  const label = ariaLabel ?? text;
+  const label = ariaLabel ?? text.replace(/\s*\n\s*/g, " ");
   const showFallback = !supported;
   const style: CSSProperties = {
     height: layout ? layout.height : undefined,
@@ -1132,7 +1157,7 @@ export function LiquidText({
         <span
           aria-hidden="true"
           className={cn(
-            "absolute inset-0 flex items-center whitespace-nowrap leading-none",
+            "absolute inset-0 flex items-center whitespace-pre-line leading-[0.94]",
             align === "left" ? "justify-start" : "justify-center",
           )}
           style={{

@@ -8,7 +8,10 @@ import { personalInfo } from "@/lib/portfolio";
 import { ThemeToggle } from "./ThemeToggle";
 
 /** Sections without their own nav item map onto a parent item. */
-const SECTION_ALIASES: Record<string, SectionId> = { education: "experience" };
+const SECTION_ALIASES: Record<string, SectionId> = {
+  education: "experience",
+  certificates: "experience",
+};
 
 function initials(name: string) {
   return name

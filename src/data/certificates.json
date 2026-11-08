@@ -1,0 +1,34 @@
+[
+  {
+    "file": "python-for-data-science-and-ai",
+    "title": "Python for Data Science & AI: Hands-On Development",
+    "issuer": "IBM",
+    "platform": "Coursera",
+    "date": "2026-07-24",
+    "verifyUrl": "https://coursera.org/verify/G98GPK5DI6FY"
+  },
+  {
+    "file": "ai-foundations",
+    "title": "AI Foundations: How Artificial Intelligence Works",
+    "issuer": "IBM",
+    "platform": "Coursera",
+    "date": "2026-07-03",
+    "verifyUrl": "https://coursera.org/verify/1UXXBAPHCDER"
+  },
+  {
+    "file": "advanced-flutter-app-development",
+    "title": "Master Advanced Flutter App Development",
+    "issuer": "EDUCBA",
+    "platform": "Coursera",
+    "date": "2026-06-15",
+    "verifyUrl": "https://coursera.org/verify/BJVHRNCVS1CR"
+  },
+  {
+    "file": "foundations-of-project-management",
+    "title": "Foundations of Project Management",
+    "issuer": "Google",
+    "platform": "Coursera",
+    "date": "2023-09-04",
+    "verifyUrl": "https://coursera.org/verify/29VAKDXWME3A"
+  }
+]

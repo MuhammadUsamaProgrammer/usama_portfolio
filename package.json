@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "media": "node scripts/generate-project-media.mjs",
-    "predev": "npm run media",
+    "certificates": "node scripts/generate-certificates.mjs",
+    "content": "npm run media && npm run certificates",
+    "predev": "npm run content",
     "dev": "next dev",
-    "prebuild": "npm run media",
+    "prebuild": "npm run content",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

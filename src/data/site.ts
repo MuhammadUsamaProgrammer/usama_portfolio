@@ -70,7 +70,7 @@ export const about = {
   beyond: [
     "Mobile Team Co-Lead, GDGoC Bahria University",
     "Flutter bootcamps for students",
-    "Volleyball, representing university teams",
+    "Volleyball and badminton, representing university teams",
   ],
 };
 
@@ -308,10 +308,18 @@ export const leadership = {
 };
 
 /**
- * Public contact channels. The phone number and the WhatsApp link stored in
- * `contactInfo.twitter` are intentionally NOT published (private info).
+ * Contact channels shown on the site (approved by the owner). The raw
+ * `contactInfo.phone` field is not shown on its own.
  */
-export const publicContactKeys = ["email", "linkedin", "github"] as const;
+export const publicContactKeys = ["email", "whatsapp", "linkedin", "github"] as const;
+
+/** Copy for the Certificates section. Certificate data: src/data/certificates.json. */
+export const certificatesSection = {
+  eyebrow: "Certificates",
+  title: "Always learning.",
+  description:
+    "Verified course certificates, each with the original PDF and its public verification page.",
+};
 
 export const contact = {
   heading: "Let’s Build Something Meaningful.",

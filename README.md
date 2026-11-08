@@ -19,7 +19,9 @@ npm run dev        # http://localhost:3000
 | `npm run build`  | Create an optimized production build      |
 | `npm run start`  | Serve the production build                |
 | `npm run lint`   | Run ESLint                                |
-| `npm run media`  | Re-scan project images (also runs automatically before `dev` and `build`) |
+| `npm run media`  | Re-scan project images |
+| `npm run certificates` | Re-check certificates and their PDFs |
+| `npm run content` | Both of the above (runs automatically before `dev` and `build`) |
 | `npx tsc --noEmit` | Type-check the project                  |
 
 ## Editing content
@@ -33,7 +35,7 @@ Content is kept separate from presentation:
 | `public/images/profile.webp` | Portrait used in the About section |
 
 - **Skills:** every skill in the JSON is shown. Skills not mapped in `skillGroups` fall into a "More" group automatically.
-- **Contact privacy:** only the keys listed in `publicContactKeys` (`email`, `linkedin`, `github`) are published. The phone number and WhatsApp link are intentionally excluded.
+- **Contact privacy:** only the keys listed in `publicContactKeys` (`email`, `whatsapp`, `linkedin`, `github`) are published. The `phone` field is not shown on its own; WhatsApp is shown as a `wa.me` link with the number as its label.
 
 ## Adding a project
 
@@ -63,6 +65,30 @@ public/images/projects/gotstuck/
   - `"artwork"`: store graphics or photos that already include a device, shown as they are.
 
 `npm run media` writes `src/data/project-media.json` (commit it). It warns about misnamed files or folders that match no project, and fails on duplicate numbers.
+
+## Adding a certificate
+
+1. **Drop the PDF** into `public/pdf/certificates/`, named in lower case with dashes, e.g. `flutter-testing.pdf`.
+2. **Add an entry** to `src/data/certificates.json`, copying the details printed on the certificate:
+
+   ```json
+   {
+     "file": "flutter-testing",
+     "title": "Flutter Testing",
+     "issuer": "Google",
+     "platform": "Coursera",
+     "date": "2026-10-01",
+     "verifyUrl": "https://coursera.org/verify/XXXXXXXX"
+   }
+   ```
+
+3. *(Optional)* add a preview of page 1 next to the PDF with the same name (`flutter-testing.webp`, `.png` or `.jpg`; landscape, ~1200px wide). Without one, the certificate shows as a paper sheet in the folder.
+
+Then run `npm run dev`. Certificates are sorted newest first, listed in the Certificates section, filed into the glass folder and hung in the wardrobe (choose one in the open folder, or "View all certificates"). Certificates without a preview get a generated paper card in the wardrobe.
+
+Components: `ui/glass-folder-cards` (folder), `ui/skate-deck-rail` (wardrobe rail; adapted with `aspect` for landscape cards and `flip={false}` for single-sided items), wired in `CertificatesShowcase.tsx` and `CertificateWardrobe.tsx`.
+
+`npm run certificates` (also run before `dev` and `build`) writes `src/data/certificate-files.json` (commit it). It fails if an entry's PDF is missing or a field is malformed, and for any PDF without an entry it prints a ready-to-paste stub.
 
 ## Project structure
 

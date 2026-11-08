@@ -10,6 +10,9 @@ import { hero } from "@/data/site";
 import { geistSans } from "@/lib/fonts";
 import { personalInfo } from "@/lib/portfolio";
 
+/** "Muhammad Usama" → "MUHAMMAD\nUSAMA": capitals, one word per line. */
+const headingLines = personalInfo.name.toUpperCase().split(/\s+/).join("\n");
+
 export function Hero() {
   return (
     <section
@@ -39,17 +42,18 @@ export function Hero() {
           </h1>
 
           {/*
-            Visual heading: the name as a viscous liquid surface (WebGL2). Drag
-            through a letter to pull a bead of ink off it. Height is reserved
-            up front (font size = 10.74% of the column width, height = 1.6x)
-            so the page does not shift when the canvas first draws.
+            Visual heading: the name in capitals, one word per line, as a viscous
+            liquid surface (WebGL2). Drag through a letter to pull a bead of ink
+            off it. Height is reserved up front so the page does not shift when
+            the canvas first draws: font size = 15.68% of the column width
+            ("MUHAMMAD" is the widest line), capped at 88px; height = 2.54x font.
           */}
           <div aria-hidden className="@container mt-7">
-            <div className="min-h-[min(17.2cqw,153.6px)]">
+            <div className="min-h-[min(39.8cqw,223.5px)]">
               <LiquidText
-                text={personalInfo.name}
+                text={headingLines}
                 align="left"
-                fontSize={96}
+                fontSize={88}
                 fontWeight={600}
                 fontFamily={geistSans.style.fontFamily}
                 accentColor="#3478F6"
@@ -59,8 +63,11 @@ export function Hero() {
             </div>
           </div>
           <noscript>
-            <p aria-hidden className="mt-7 text-display font-semibold text-ink">
-              {personalInfo.name}
+            <p
+              aria-hidden
+              className="mt-7 whitespace-pre-line text-display font-semibold uppercase text-ink"
+            >
+              {headingLines}
             </p>
           </noscript>
 

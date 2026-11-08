@@ -31,6 +31,14 @@
   --color-border: var(--color-line);
   --color-muted-foreground: var(--color-muted);
   --color-ring: var(--color-accent);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-ink);
+  /* Chart tokens: soft accent tints (used for highlight pills and fallbacks). */
+  --color-chart-1: color-mix(in oklab, var(--color-accent) 22%, var(--color-surface));
+  --color-chart-2: color-mix(in oklab, var(--color-accent) 55%, var(--color-surface));
+  --color-chart-3: var(--color-accent);
+  --color-chart-4: color-mix(in oklab, var(--color-accent) 60%, var(--color-ink));
+  --color-chart-5: color-mix(in oklab, var(--color-accent) 35%, var(--color-ink));
   --color-accent: #3478f6;
   /* Darker accent for small text: 5.5:1 on white (AA). */
   --color-accent-strong: #1f5fd6;
