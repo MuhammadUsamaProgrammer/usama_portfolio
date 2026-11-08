@@ -149,7 +149,28 @@ Set the public URL so canonical links, Open Graph, the sitemap, and robots point
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
-### Vercel (recommended)
+### GitHub Pages (live)
+
+The site is published as a static export by `.github/workflows/deploy-pages.yml` to
+**https://muhammadusamaprogrammer.github.io/usama_portfolio/**.
+
+1. One-time: on GitHub, open **Settings → Pages** and set **Source** to **GitHub Actions**.
+2. Push to `main` (or run the workflow from the **Actions** tab). It builds and deploys in about two minutes.
+
+How it works:
+
+- `STATIC_EXPORT=true` turns on `output: "export"`, unoptimised images and the `basePath`; the workflow sets it, together with `NEXT_PUBLIC_BASE_PATH` (`/usama_portfolio`) and `NEXT_PUBLIC_SITE_URL`, from the repository's Pages settings. A custom domain works without changes (the base path becomes empty).
+- Paths to files in `public/` go through `withBase()` (`src/lib/base-path.ts`), done centrally in `src/lib/portfolio.ts` and `src/lib/certificates.ts`.
+- `robots.txt` and `sitemap.xml` are generated into `public/` by `npm run seo`; the social preview is the static `src/app/opengraph-image.png`.
+
+Preview the export locally (PowerShell):
+
+```powershell
+$env:STATIC_EXPORT='true'; $env:NEXT_PUBLIC_BASE_PATH='/usama_portfolio'; npm run build
+# the site is in out/; serve it so that out/ is available under /usama_portfolio/
+```
+
+### Vercel
 
 1. Push the repository to GitHub.
 2. Import it at [vercel.com/new](https://vercel.com/new). The framework is detected automatically.
@@ -163,4 +184,4 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com npm run build
 npm run start -- -p 3000
 ```
 
-Cache Components is enabled in `next.config.ts`, which requires the Node.js runtime (not Edge).
+Cache Components is enabled in `next.config.ts` for normal builds (Node.js runtime); it is switched off for the static export.

@@ -1,4 +1,5 @@
 import raw from "@/data/portfolio.json";
+import { withBase } from "@/lib/base-path";
 import mediaManifest from "@/data/project-media.json";
 import {
   experienceStages,
@@ -53,9 +54,10 @@ function projectMedia(project: Project): ProjectMedia | null {
   const entry = media[project.title];
   if (!entry || (entry.screens.length === 0 && !entry.icon)) return null;
   return {
-    icon: entry.icon ? { ...entry.icon, alt: `${project.title} app icon` } : null,
+    icon: entry.icon ? { ...entry.icon, src: withBase(entry.icon.src), alt: `${project.title} app icon` } : null,
     screens: entry.screens.map((screen) => ({
       ...screen,
+      src: withBase(screen.src),
       alt: `${project.title} — ${screen.caption}`,
     })),
   };

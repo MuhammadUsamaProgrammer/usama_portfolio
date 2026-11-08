@@ -1,5 +1,6 @@
 import entries from "@/data/certificates.json";
 import fileInfo from "@/data/certificate-files.json";
+import { withBase } from "@/lib/base-path";
 import type { Certificate, CertificateEntry, CertificateFileInfo } from "@/types/portfolio";
 
 const files = fileInfo as Record<string, CertificateFileInfo>;
@@ -28,8 +29,8 @@ export const certificates: Certificate[] = (entries as CertificateEntry[])
     return [
       {
         ...entry,
-        pdf: info.pdf,
-        preview: info.preview,
+        pdf: withBase(info.pdf),
+        preview: info.preview ? { ...info.preview, src: withBase(info.preview.src) } : null,
         dateLabel: DATE_FORMAT.format(new Date(`${entry.date}T00:00:00Z`)),
         sizeLabel: sizeLabel(info.sizeBytes),
       },

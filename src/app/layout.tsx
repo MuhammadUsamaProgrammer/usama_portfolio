@@ -9,7 +9,9 @@ import { themeInitScript } from "@/lib/theme-script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  // Origin only: Next.js already prefixes its own metadata files (OG image,
+  // icon) with the base path, so a base URL with a path would double it.
+  metadataBase: new URL(new URL(site.url).origin),
   title: {
     default: site.seo.title,
     template: `%s · ${personalInfo.name}`,
@@ -18,11 +20,11 @@ export const metadata: Metadata = {
   keywords: [...site.seo.keywords],
   authors: [{ name: personalInfo.name }],
   creator: personalInfo.name,
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${site.url}/` },
   openGraph: {
     type: "profile",
     locale: site.locale,
-    url: "/",
+    url: `${site.url}/`,
     siteName: personalInfo.name,
     title: site.seo.title,
     description: site.seo.description,

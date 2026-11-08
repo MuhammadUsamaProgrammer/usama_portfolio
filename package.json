@@ -5,7 +5,8 @@
   "scripts": {
     "media": "node scripts/generate-project-media.mjs",
     "certificates": "node scripts/generate-certificates.mjs",
-    "content": "npm run media && npm run certificates",
+    "seo": "node scripts/generate-seo-files.mjs",
+    "content": "npm run media && npm run certificates && npm run seo",
     "predev": "npm run content",
     "dev": "next dev",
     "prebuild": "npm run content",
