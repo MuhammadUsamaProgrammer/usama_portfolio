@@ -129,7 +129,7 @@ Reusable pieces live in `src/components/interactions/`:
 | `ui/liquid-text` | Hero name | Name rendered as a viscous WebGL2 surface; drag through a letter to pull ink off it. Real `<h1>` kept for SEO; plain-text fallback without WebGL |
 | `ui/dot-field` | Contact | Closing headline assembled from a dot grid; cursor pushes the dots (canvas, no dependencies) |
 
-Project cards also tilt, show a "View" label that follows the cursor over the cover, and their imagery drifts slightly on scroll; the navbar has a hover pill that slides between links.
+Project cards also tilt, show a "View" label that follows the cursor over the cover, and their imagery drifts slightly on scroll. The navbar section links use `ui/liquid-glass-navbar`: a WebGL pill of water whose drop follows the active section (scroll-spy), icons only below 1024px, no drop at the hero, and `ambient={false}` so it only animates on interaction.
 
 All pointer effects are limited to mouse/trackpad (`useFinePointer`), and every effect turns off under `prefers-reduced-motion` (`useMotionAllowed`, hydration-safe). Nothing hijacks scrolling.
 

@@ -1,11 +1,26 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Briefcase, LayoutGrid, Menu, Send, Sparkles, UserRound, X, type LucideIcon } from "lucide-react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useMediaQuery } from "@/components/interactions/hooks";
+import { LiquidNavbar, type LiquidNavItem, type NimbusFx } from "@/components/ui/liquid-glass-navbar";
 import { navItems, type SectionId } from "@/data/site";
 import { personalInfo } from "@/lib/portfolio";
+import { useTheme } from "@/lib/theme";
 import { ThemeToggle } from "./ThemeToggle";
+
+/** Icon and tap animation for each section link in the liquid navbar. */
+const SECTION_LOOK: Partial<Record<SectionId, { icon: LucideIcon; fx: NimbusFx }>> = {
+  about: { icon: UserRound, fx: "wave" },
+  skills: { icon: Sparkles, fx: "glow" },
+  projects: { icon: LayoutGrid, fx: "pop" },
+  experience: { icon: Briefcase, fx: "spin" },
+  contact: { icon: Send, fx: "plane" },
+};
+
+/** After a nav click, ignore scroll-spy briefly so the drop doesn't wander mid-scroll. */
+const CLICK_LOCK_MS = 1100;
 
 /** Sections without their own nav item map onto a parent item. */
 const SECTION_ALIASES: Record<string, SectionId> = {
@@ -26,9 +41,10 @@ export function Navbar() {
   const [active, setActive] = useState<SectionId>("home");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  /** Desktop link under the cursor; a soft pill slides between links. */
-  const [hovered, setHovered] = useState<SectionId | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const clickLock = useRef(0);
+  const dark = useTheme() === "dark";
+  const wide = useMediaQuery("(min-width: 1024px)");
   const panelRef = useRef<HTMLDivElement>(null);
 
   /* Scroll-spy: highlight the section crossing the middle of the viewport. */
@@ -42,6 +58,7 @@ export function Navbar() {
           if (!entry.isIntersecting) continue;
           const id = entry.target.id;
           const mapped = (SECTION_ALIASES[id] ?? id) as SectionId;
+          if (performance.now() < clickLock.current) continue;
           if (navItems.some((item) => item.id === mapped)) setActive(mapped);
         }
       },
@@ -98,12 +115,23 @@ export function Navbar() {
   }, [open, closeMenu]);
 
   const desktopItems = navItems.filter((item) => item.id !== "home");
+  const liquidItems: LiquidNavItem[] = desktopItems.map((item) => {
+    const look = SECTION_LOOK[item.id];
+    const Icon = look?.icon;
+    return {
+      label: item.label,
+      href: `#${item.id}`,
+      fx: look?.fx ?? "pop",
+      icon: Icon ? <Icon className="size-[18px]" strokeWidth={1.8} aria-hidden /> : undefined,
+    };
+  });
+  // -1 (e.g. at the hero) = no section highlighted, the water fades out.
+  const activeIndex = desktopItems.findIndex((item) => item.id === active);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-4">
       <div className="container-page">
-        <nav
-          aria-label="Primary"
+        <div
           className={`pointer-events-auto relative mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full border pl-2 pr-2 backdrop-blur-xl backdrop-saturate-150 transition-[background-color,box-shadow,border-color] duration-300 ${
             scrolled || open
               ? "border-line/80 bg-surface/75 shadow-soft"
@@ -126,52 +154,32 @@ export function Navbar() {
             </span>
           </a>
 
-          <ul
-            className="hidden items-center gap-0.5 md:flex"
-            onPointerLeave={() => setHovered(null)}
-          >
-            {desktopItems.map((item) => {
-              const isActive = active === item.id;
-              return (
-                <li
-                  key={item.id}
-                  className="relative"
-                  onPointerEnter={(event) => event.pointerType === "mouse" && setHovered(item.id)}
-                >
-                  <a
-                    href={`#${item.id}`}
-                    aria-current={isActive ? "location" : undefined}
-                    className={`relative z-10 flex h-10 items-center rounded-full px-4 text-sm transition-colors duration-200 ${
-                      isActive ? "text-ink" : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                  <AnimatePresence>
-                    {hovered === item.id ? (
-                      <motion.span
-                        layoutId="nav-hover"
-                        aria-hidden
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ type: "spring", stiffness: 420, damping: 36 }}
-                        className="absolute inset-0 rounded-full bg-ink/[0.045]"
-                      />
-                    ) : null}
-                  </AnimatePresence>
-                  {isActive ? (
-                    <motion.span
-                      layoutId="nav-active"
-                      aria-hidden
-                      className="absolute inset-0 rounded-full bg-subtle ring-1 ring-line/70"
-                      transition={{ type: "spring", stiffness: 380, damping: 34 }}
-                    />
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
+          {/* Section links as a pill of water (icons only on medium screens). */}
+          <div className="hidden md:flex">
+            <LiquidNavbar
+              items={liquidItems}
+              active={activeIndex}
+              onChange={(index) => {
+                const target = desktopItems[index];
+                if (!target) return;
+                clickLock.current = performance.now() + CLICK_LOCK_MS;
+                setActive(target.id);
+              }}
+              tone={dark ? "dark" : "light"}
+              compact={!wide}
+              ambient={false}
+              accent="#3478F6"
+              ariaLabel="Primary"
+              style={
+                {
+                  fontFamily: "var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif",
+                  // link colours follow the site's ink / muted tokens in both themes
+                  "--n-fg": "var(--color-ink)",
+                  "--n-fg-soft": "var(--color-muted)",
+                } as CSSProperties
+              }
+            />
+          </div>
 
           <div className="flex items-center gap-1">
             <ThemeToggle className="size-11 md:size-10" />
@@ -205,6 +213,7 @@ export function Navbar() {
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-x-0 top-[calc(100%+0.5rem)] origin-top rounded-[1.75rem] border border-line bg-surface p-2 shadow-lift md:hidden"
               >
+                <nav aria-label="Primary">
                 <ul className="flex flex-col">
                   {navItems.map((item) => {
                     const isActive = active === item.id;
@@ -227,10 +236,11 @@ export function Navbar() {
                     );
                   })}
                 </ul>
+                </nav>
               </motion.div>
             ) : null}
           </AnimatePresence>
-        </nav>
+        </div>
       </div>
     </header>
   );
