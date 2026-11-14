@@ -49,11 +49,12 @@ export function Hero() {
             ("MUHAMMAD" is the widest line), capped at 88px; height = 2.54x font.
           */}
           <div aria-hidden className="@container mt-7">
-            <div className="min-h-[min(39.8cqw,223.5px)]">
+            <div className="min-h-[min(39.8cqw,13.97rem)]">
               <LiquidText
                 text={headingLines}
                 align="left"
                 fontSize={88}
+                scaleWithRoot
                 fontWeight={600}
                 fontFamily={geistSans.style.fontFamily}
                 accentColor="#3478F6"
@@ -109,7 +110,7 @@ export function Hero() {
 
         {/* The sculpture rises and recedes slightly faster: a gentle parallax. */}
         <ScrollDrift
-          className="relative h-[300px] min-[420px]:h-[360px] sm:h-[440px] lg:col-span-5 lg:h-[580px]"
+          className="relative h-[300px] min-[420px]:h-[360px] sm:h-[440px] lg:col-span-5 lg:h-[36.25rem]"
           y={-50}
           scale={0.94}
           fadeTo={0.35}

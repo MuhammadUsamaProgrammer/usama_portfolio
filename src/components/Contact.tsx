@@ -29,9 +29,10 @@ export function Contact() {
             fontFamily={geistSans.style.fontFamily}
             fontWeight={600}
             scrollScatter={false}
-            height="min(80svh, 760px)"
+            height="min(80svh, 47.5rem)"
             minHeight={520}
             maxFontSize={88}
+            scaleWithRoot
             actions={
               email ? (
                 <>

@@ -4,7 +4,7 @@ import GlassFolder, {
   type ArtRecipe,
   type FolderFile,
 } from "@/components/ui/glass-folder-cards";
-import { useMediaQuery } from "@/components/interactions/hooks";
+import { useMediaQuery, useRootScale } from "@/components/interactions/hooks";
 import { useTheme } from "@/lib/theme";
 import type { Certificate } from "@/types/portfolio";
 
@@ -32,6 +32,7 @@ type CertificatesFolderProps = {
 export function CertificatesFolder({ certificates, onSelect }: CertificatesFolderProps) {
   const dark = useTheme() === "dark";
   const compact = useMediaQuery("(max-width: 420px)");
+  const scale = useRootScale();
 
   // The folder puts the last file at the front of the stack, nearest the glass:
   // reverse so the newest certificate is the one you see first.
@@ -52,7 +53,7 @@ export function CertificatesFolder({ certificates, onSelect }: CertificatesFolde
       seed={7}
       files={files}
       action="none"
-      width={compact ? 290 : 360}
+      width={Math.round((compact ? 290 : 360) * scale)}
       onFileSelect={(_, index) => {
         const certificate = ordered[index];
         if (!certificate) return;

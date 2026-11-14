@@ -44,6 +44,8 @@ export interface DotFieldProps extends Omit<React.HTMLAttributes<HTMLElement>, "
   minHeight?: number;
   /** Upper bound for the headline size in px. */
   maxFontSize?: number;
+  /** Multiply `maxFontSize` by the root font scale (html font-size ÷ 16). */
+  scaleWithRoot?: boolean;
 }
 
 export interface DotFieldHandle {
@@ -75,6 +77,7 @@ export const DotField = React.forwardRef<DotFieldHandle, DotFieldProps>(function
     height = "100svh",
     minHeight = 560,
     maxFontSize = 168,
+    scaleWithRoot = false,
     className = "",
     style,
     ...rest
@@ -102,8 +105,8 @@ export const DotField = React.forwardRef<DotFieldHandle, DotFieldProps>(function
     restart: () => {},
   });
 
-  const opts = React.useRef({ headline, fontFamily, fontWeight, grid, repelRadius, accent, onReady, maxFontSize });
-  opts.current = { headline, fontFamily, fontWeight, grid, repelRadius, accent, onReady, maxFontSize };
+  const opts = React.useRef({ headline, fontFamily, fontWeight, grid, repelRadius, accent, onReady, maxFontSize, scaleWithRoot });
+  opts.current = { headline, fontFamily, fontWeight, grid, repelRadius, accent, onReady, maxFontSize, scaleWithRoot };
 
   React.useImperativeHandle(ref, () => ({
     replay: () => S.current.restart(),
@@ -138,7 +141,8 @@ export const DotField = React.forwardRef<DotFieldHandle, DotFieldProps>(function
       const band = Math.max(48, bandBottom - bandTop);
       s.cy = bandTop + band / 2;
 
-      let size = Math.min(W * 0.115, o.maxFontSize, band), lines: string[] = [];
+      const rootScale = o.scaleWithRoot ? (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) / 16 : 1;
+      let size = Math.min(W * 0.115, o.maxFontSize * rootScale, band), lines: string[] = [];
       for (;;) {
         g.font = font(size); lines = []; let cur = "";
         for (const w of words) { const t = cur ? cur + " " + w : w; if (g.measureText(t).width > W * 0.88 && cur) { lines.push(cur); cur = w; } else cur = t; }
@@ -345,21 +349,21 @@ export const DotField = React.forwardRef<DotFieldHandle, DotFieldProps>(function
 
         <div ref={copyRef} className="pointer-events-none absolute inset-0">
           {eyebrow && (
-            <div ref={eyebrowRef} data-reveal className={`absolute inset-x-0 top-[clamp(28px,9%,96px)] flex justify-center ${fade}`}>
-              <span className="inline-flex h-[30px] items-center gap-2 rounded-full border border-border bg-surface/60 px-3 text-[13px] font-medium tracking-[-0.01em] text-muted-foreground backdrop-blur-md">
+            <div ref={eyebrowRef} data-reveal className={`absolute inset-x-0 top-[clamp(1.75rem,9%,6rem)] flex justify-center ${fade}`}>
+              <span className="inline-flex h-[1.875rem] items-center gap-2 rounded-full border border-border bg-surface/60 px-3 text-[0.8125rem] font-medium tracking-[-0.01em] text-muted-foreground backdrop-blur-md">
                 <i className="size-1.5 rounded-full" style={{ background: accent, boxShadow: `0 0 10px ${accent}` }} />
                 {eyebrow}
               </span>
             </div>
           )}
-          <div className="absolute inset-0 flex flex-col items-center justify-end px-5 pb-[clamp(36px,9%,96px)] text-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-end px-5 pb-[clamp(2.25rem,9%,6rem)] text-center">
             <div ref={bottomRef} className="flex flex-col items-center">
             {description && (
-              <p data-reveal className={`m-0 max-w-[600px] text-[17px] leading-[25px] tracking-[-0.02em] text-muted-foreground ${fade} delay-100`}>
+              <p data-reveal className={`m-0 max-w-[37.5rem] text-[1.0625rem] leading-[1.5625rem] tracking-[-0.02em] text-muted-foreground ${fade} delay-100`}>
                 {description}
               </p>
             )}
-            {actions && <div data-reveal className={`pointer-events-auto mt-[22px] flex flex-wrap justify-center gap-2.5 ${fade} delay-200`}>{actions}</div>}
+            {actions && <div data-reveal className={`pointer-events-auto mt-[1.375rem] flex flex-wrap justify-center gap-2.5 ${fade} delay-200`}>{actions}</div>}
             </div>
           </div>
         </div>

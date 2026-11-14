@@ -23,6 +23,22 @@ export function useMediaQuery(query: string, serverValue = false): boolean {
   );
 }
 
+const subscribeResize = (onChange: () => void) => {
+  window.addEventListener("resize", onChange);
+  return () => window.removeEventListener("resize", onChange);
+};
+const readRootScale = () =>
+  (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) / 16;
+
+/**
+ * Root font size ÷ 16: 1 up to 1440px wide, larger on big screens (see the
+ * `html` rule in globals.css). Multiply px sizes by it so they grow with the
+ * rest of the rem-based design. 1 during SSR and hydration.
+ */
+export function useRootScale(): number {
+  return useSyncExternalStore(subscribeResize, readRootScale, () => 1);
+}
+
 /** True when motion is allowed (no `prefers-reduced-motion`). Hydration-safe. */
 export function useMotionAllowed(): boolean {
   return !useMediaQuery("(prefers-reduced-motion: reduce)");

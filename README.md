@@ -124,9 +124,9 @@ Reusable pieces live in `src/components/interactions/`:
 | `CountUp` | Hero stats | Numbers count up once when they come into view |
 | `ScrollProgressButton` | Global | Floating back-to-top with a scroll-progress ring |
 | `Magnetic` | Hero and contact CTAs | Buttons lean toward the cursor (max 8px) |
-| `SpotlightGroup` + `.spotlight` | Skills | Cursor light inside cards and along neighbouring borders |
 | `TiltFrame` | About portrait | Subtle 3D tilt with a soft glare |
 | `ui/liquid-text` | Hero name | Name rendered as a viscous WebGL2 surface; drag through a letter to pull ink off it. Real `<h1>` kept for SEO; plain-text fallback without WebGL |
+| Logo rail | Skills | 20 brand logos (Simple Icons, `src/data/skill-logos.ts`) glide past and lift with a brand-coloured glow on hover; the full skill list folds behind "Show all skills" |
 | `ui/dot-field` | Contact | Closing headline assembled from a dot grid; cursor pushes the dots (canvas, no dependencies) |
 
 Project cards also tilt, show a "View" label that follows the cursor over the cover, and their imagery drifts slightly on scroll. The navbar section links use `ui/liquid-glass-navbar`: a WebGL pill of water whose drop follows the active section (scroll-spy), icons only below 1024px, no drop at the hero, and `ambient={false}` so it only animates on interaction.

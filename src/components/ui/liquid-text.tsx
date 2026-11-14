@@ -50,6 +50,8 @@ export interface LiquidTextProps {
   fontSize?: number;
   fontWeight?: number;
   fontFamily?: string;
+  /** Multiply `fontSize` by the root font scale (html font-size ÷ 16), so the cap grows with rem-based layouts. */
+  scaleWithRoot?: boolean;
   /** Horizontal placement of the word inside the component. Default "center". */
   align?: "center" | "left";
   /** A slow drifting blob keeps the surface alive when nobody is pointing at it. Default true. */
@@ -734,6 +736,7 @@ export function LiquidText({
   fontWeight = 700,
   fontFamily,
   align = "center",
+  scaleWithRoot = false,
   autoplay = true,
   frozen = false,
   ariaLabel,
@@ -964,7 +967,10 @@ export function LiquidText({
     const fontSpec = `${fontWeight} 100px ${family}`;
     const run = () => {
       if (cancelled) return;
-      const lay = computeLayout(width, text, family, fontWeight, fontSize, align);
+      const rootScale = scaleWithRoot
+        ? (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) / 16
+        : 1;
+      const lay = computeLayout(width, text, family, fontWeight, fontSize * rootScale, align);
       if (!lay) return;
       const field = buildField(lay);
       if (!field) return;
@@ -1032,6 +1038,7 @@ export function LiquidText({
     fontFamily,
     fontSize,
     align,
+    scaleWithRoot,
     fontsReady,
     frozen,
     reducedMotion,

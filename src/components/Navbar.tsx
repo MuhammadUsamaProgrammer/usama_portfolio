@@ -122,7 +122,7 @@ export function Navbar() {
       label: item.label,
       href: `#${item.id}`,
       fx: look?.fx ?? "pop",
-      icon: Icon ? <Icon className="size-[18px]" strokeWidth={1.8} aria-hidden /> : undefined,
+      icon: Icon ? <Icon className="size-[1.125rem]" strokeWidth={1.8} aria-hidden /> : undefined,
     };
   });
   // -1 (e.g. at the hero) = no section highlighted, the water fades out.
